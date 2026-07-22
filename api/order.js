@@ -1,6 +1,6 @@
-import { google } from 'googleapis';
+const { google } = require('googleapis');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // 1. ปลดล็อก CORS ให้ Frontend เรียกใช้งานได้ทุกโดเมน
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
   );
 
-  // รองรับ Preflight Request จากเบราวเซอร์
+  // รองรับ Preflight Request จากเบราว์เซอร์
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { orderId, customerName, phone, address, items, totalAmount, slipUrl } = req.body;
+    const { orderId, customerName, phone, address, items, totalAmount, slipUrl } = req.body || {};
 
     // แปลง items เผื่อกรณีส่งมาจาก Form เป็น String
     const parsedItems = typeof items === 'string' ? JSON.parse(items) : (items || []);
@@ -128,4 +128,4 @@ export default async function handler(req, res) {
       error: error.message || 'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์' 
     });
   }
-}
+};
