@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUSTWEAR LKB - ULTIMATE APPAREL LAB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { 
+                        brand: '#FF6600',
+                        studioLight: '#f9f9fb',
+                        studioDark: '#09090b'
+                    },
+                    fontFamily: {
+                        sans: ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #FF6600; }
+        
+        .dot-grid {
+            background-image: radial-gradient(#27272a 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .scroll-trigger {
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(2px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-trigger.visible {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+        
+        .ambient-glow {
+            position: absolute;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(255,102,0,0.15) 0%, rgba(255,102,0,0) 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .toast-enter { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .toast-exit { animation: fadeOut 0.3s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-studioDark text-zinc-400 font-sans antialiased selection:bg-brand selection:text-white custom-scrollbar transition-colors duration-500 overflow-x-hidden">
+
+    <!-- WELCOME LANGUAGE MODAL -->
+    <div id="welcome-lang-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[100] flex items-center justify-center transition-all duration-500">
+        <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl max-w-sm w-full mx-4 text-center space-y-8 shadow-2xl">
+            <div>
+                <h2 class="text-2xl font-black text-white tracking-tight mb-2">Select Language</h2>
+                <p class="text-zinc-400 text-sm">กรุณาเลือกภาษาเพื่อเข้าสู่เว็บไซต์</p>
+            </div>
+            <div class="space-y-3">
+                <button onclick="initLanguage('th')" class="w-full bg-zinc-800 hover:bg-brand hover:border-brand border border-zinc-700 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center shadow-lg">
+                    <span class="tracking-wide text-lg">ภาษาไทย</span>
+                </button>
+                <button onclick="initLanguage('en')" class="w-full bg-zinc-800 hover:bg-brand hover:border-brand border border-zinc-700 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center shadow-lg">
+                    <span class="tracking-wide text-lg">English</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[90] flex flex-col space-y-3 pointer-events-none max-w-sm w-full px-4"></div>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="border-b border-zinc-900 sticky top-0 bg-studioDark/80 backdrop-blur-md z-40">
+        <div class="w-full max-w-full px-4 sm:px-8 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer">
+                <img src="https://i.ibb.co/sJzkbMZM/S-2555917.jpg" alt="JUSTWEAR LKB Logo" class="h-9 w-auto object-contain rounded-lg">
+                <div class="text-xl font-bold tracking-tight text-white uppercase">
+                    Justwear<span class="font-light text-brand">.lkb</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-6 text-xs font-medium tracking-wide text-zinc-500">
+                <a href="#hero-zone" data-i18n="navHome" class="hover:text-brand transition hidden md:inline">หน้าแรก</a>
+                <a href="#custom-zone" data-i18n="navStudio" class="hover:text-brand text-zinc-400 transition hidden md:inline">เลือกแบบและสั่งซื้อ</a>
+                <a href="#contact-shop-zone" data-i18n="navContact" class="hover:text-brand text-zinc-100 font-semibold transition">ติดต่อผู้ขาย</a>
+                
+                <!-- ปุ่มเปลี่ยนภาษาแบบเต็ม -->
+                <div class="flex items-center gap-1 bg-zinc-800/80 p-1 rounded-xl border border-zinc-700/50 text-xs font-medium">
+                    <button id="btn-lang-th" onclick="updateLanguage('th')" class="px-3 py-1.5 rounded-lg text-white bg-zinc-700 font-bold transition">
+                        ภาษาไทย
+                    </button>
+                    <button id="btn-lang-en" onclick="updateLanguage('en')" class="px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">
+                        English
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ZONE 1: HERO SHOWCASE -->
+    <section id="hero-zone" class="scroll-trigger relative min-h-[30vh] flex flex-col items-center justify-center text-center px-6 bg-gradient-to-b from-zinc-950 to-studioDark dot-grid pt-12 pb-8">
+        <div class="ambient-glow w-[600px] h-[600px] -top-40 left-1/2 -translate-x-1/2 opacity-100"></div>
+        <div class="max-w-5xl mx-auto w-full relative z-10 space-y-4">
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.1] mb-2">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-orange-400">Choose Your Design.</span>
+            </h1>
+            <p data-i18n="heroDesc" class="text-zinc-400 text-sm sm:text-base max-w-2xl mx-auto font-normal leading-relaxed">
+                เลือกแบบเสื้อเจอร์ซี่ที่คุณชื่นชอบ พร้อมระบบคำนวณราคาส่วนลดอัตโนมัติตามจำนวนตัวสำหรับกลุ่มเพื่อนหรือคณะ
+            </p>
+        </div>
+    </section>
+
+    <!-- ZONE 2: DESIGN SHOWCASE & CUSTOMIZER AREA -->
+    <section id="custom-zone" class="relative border-t border-zinc-900 bg-[#0c0c0e] py-8">
+        <div class="w-full max-w-full px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+            
+            <!-- LEFT COLUMN: STICKY PREVIEW IMAGE DISPLAY -->
+            <div class="scroll-trigger lg:sticky lg:top-24 lg:col-span-6 w-full flex flex-col items-center justify-center space-y-4">
+                
+                <!-- Preview Container -->
+                <div class="relative w-full aspect-[4/3] bg-zinc-900/80 rounded-3xl border border-zinc-800/80 flex items-center justify-center overflow-hidden shadow-2xl p-4 group">
+                    <div class="ambient-glow w-96 h-96"></div>
+                    
+                    <img id="design-preview-img" 
+                         src="https://i.ibb.co/zTbYfYND/S-2555913.jpg" 
+                         alt="Jersey Design Preview" 
+                         class="w-full h-full object-contain relative z-10 transition-all duration-300 transform group-hover:scale-105">
+                </div>
+
+                <!-- Design Selector Thumbnails -->
+                <div class="w-full space-y-2">
+                    <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block text-center" data-i18n="selectDesignTitle">คลิกเลือกแบบเสื้อที่ต้องการดูภาพตัวอย่าง:</span>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button data-design="1" class="design-btn p-2 rounded-2xl bg-zinc-900 border-2 border-brand transition-all flex flex-col items-center space-y-2 group">
+                            <img src="https://i.ibb.co/zTbYfYND/S-2555913.jpg" alt="Design 1" class="w-full h-16 object-cover rounded-lg">
+                            <span class="text-[10px] font-bold text-brand transition-colors" data-i18n="design1Name">แบบที่ 1 (Graffiti)</span>
+                        </button>
+                        <button data-design="2" class="design-btn p-2 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col items-center space-y-2 group opacity-70 hover:opacity-100">
+                            <img src="https://i.ibb.co/x8RPfnG7/S-2555914.jpg" alt="Design 2" class="w-full h-16 object-cover rounded-lg">
+                            <span class="text-[10px] font-bold text-zinc-400 group-hover:text-white transition-colors" data-i18n="design2Name">แบบที่ 2 (Gothic)</span>
+                        </button>
+                        <button data-design="3" class="design-btn p-2 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col items-center space-y-2 group opacity-70 hover:opacity-100">
+                            <img src="https://i.ibb.co/b5mZTfDM/S-2555915.jpg" alt="Design 3" class="w-full h-16 object-cover rounded-lg">
+                            <span class="text-[10px] font-bold text-zinc-400 group-hover:text-white transition-colors" data-i18n="design3Name">แบบที่ 3 (Cursive)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: CONTROL PANEL CONFIGURATOR -->
+            <div class="scroll-trigger lg:col-span-6 space-y-6 w-full">
+                
+                <!-- STEP 1: CONFIGURE ITEM -->
+                <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800/60 space-y-5">
+                    <div>
+                        <span class="text-xs font-bold text-brand tracking-widest uppercase">01 / Configure Piece</span>
+                        <h2 data-i18n="configTitle" class="text-xl font-extrabold tracking-tight text-white mt-0.5">ระบุรายละเอียดสกรีนและไซส์</h2>
+                    </div>
+
+                    <!-- Selected Design Label -->
+                    <div class="bg-zinc-950 p-3.5 rounded-xl border border-zinc-800 flex justify-between items-center">
+                        <span class="text-xs text-zinc-400 font-medium" data-i18n="currentDesignLabel">แบบเสื้อที่เลือกอยู่:</span>
+                        <span id="current-design-name" data-i18n="design1Name" class="text-xs font-bold text-brand uppercase">แบบที่ 1 (Graffiti)</span>
+                    </div>
+
+                    <!-- Personalization Details -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-zinc-800/50 pt-4">
+                        <div>
+                            <label data-i18n="nameLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">ชื่อสกรีน * (ภาษาอังกฤษเท่านั้น)</label>
+                            <input type="text" id="input-name" maxlength="12" placeholder="ALAN" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition uppercase tracking-wider">
+                            <p id="error-name" data-i18n="errName" class="text-[10px] text-red-500 mt-1 hidden">กรุณากรอกชื่อสกรีน (ภาษาอังกฤษ)</p>
+                        </div>
+                        <div>
+                            <label data-i18n="numLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">หมายเลข * (สูงสุด 3 หลัก)</label>
+                            <input type="text" id="input-number" maxlength="3" placeholder="07" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition tracking-widest">
+                            <p id="error-number" data-i18n="errNum" class="text-[10px] text-red-500 mt-1 hidden">กรุณากรอกหมายเลข 1-3 หลัก</p>
+                        </div>
+                    </div>
+
+                    <!-- Sizes Selection -->
+                    <div class="border-t border-zinc-800/50 pt-4 space-y-2">
+                        <h3 data-i18n="sizeTitle" class="text-xs font-bold text-zinc-400 tracking-wider uppercase">ไซส์เสื้อ</h3>
+                        <div id="size-container" class="grid grid-cols-4 sm:grid-cols-7 gap-2">
+                            <button class="size-btn py-3 bg-zinc-950 text-zinc-400 border border-zinc-800 font-bold text-xs rounded-xl transition-all hover:bg-zinc-800" data-size="S">S</button>
+                            <button class="size-btn py-3 bg-zinc-950 text-zinc-400 border border-zinc-800 font-bold text-xs rounded-xl transition-all hover:bg-zinc-800" data-size="M">M</button>
+                            <button class="size-btn py-3 bg-zinc-950 text-zinc-400 border border-zinc-800 font-bold text-xs rounded-xl transition-all hover:bg-zinc-800" data-size="L">L</button>
+                            <button class="size-btn py-3 bg-zinc-950 text-zinc-400 border border-zinc-800 font-bold text-xs rounded-xl transition-all hover:bg-zinc-800" data-size="XL">XL</button>
+                            <button class="size-btn py-3 bg-zinc-950 text-zinc-400 border border-zinc-800 font-bold text-xs rounded-xl transition-all hover:bg-zinc-800" data-size="2XL">2XL</button>
+                            <button class="size-btn py-3 bg-zinc-950 text-zinc-400 border border-zinc-800 font-bold text-xs rounded-xl transition-all hover:bg-zinc-800" data-size="3XL">3XL</button>
+                            <button class="size-btn py-3 bg-zinc-950 text-zinc-400 border border-zinc-800 font-bold text-xs rounded-xl transition-all hover:bg-zinc-800" data-size="4XL">4XL</button>
+                        </div>
+                        <p id="error-size" data-i18n="errSize" class="text-[10px] text-red-500 mt-1 hidden">กรุณาเลือกไซส์เสื้อ</p>
+                    </div>
+
+                    <!-- Add to Cart -->
+                    <div class="pt-2">
+                        <button id="add-to-cart-btn" class="w-full bg-brand hover:bg-orange-600 text-white font-bold text-xs tracking-wider py-3.5 rounded-xl transition duration-200 uppercase flex items-center justify-center gap-2 shadow-lg shadow-brand/10">
+                            <span>+</span> <span data-i18n="addToCartBtn">เพิ่มเสื้อตัวนี้ลงตะกร้ากลุ่ม</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PRICE & SIZE REFERENCE -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- PRICE TIERS -->
+                    <div class="bg-zinc-900/90 p-5 rounded-2xl border border-zinc-800/60 space-y-4 shadow-md">
+                        <div class="flex items-center space-x-2 border-b border-zinc-800/50 pb-2.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-brand animate-pulse"></span>
+                            <h3 data-i18n="priceTableTitle" class="text-xs font-bold tracking-wider text-white uppercase">ส่วนลดกลุ่ม (Bulk Tiers)</h3>
+                        </div>
+                        <div class="overflow-hidden border border-zinc-800/40 rounded-xl bg-zinc-950/40 text-xs">
+                            <table class="w-full text-left font-medium">
+                                <tbody class="divide-y divide-zinc-900 text-zinc-300">
+                                    <tr id="tier-1-row" class="hover:bg-zinc-900/40 bg-zinc-900/40 border-l-2 border-brand">
+                                        <td class="p-3 font-bold text-white text-xs">1-5 ตัว</td>
+                                        <td class="p-3 text-zinc-400 font-bold text-xs text-right sm:text-left">350฿</td>
+                                    </tr>
+                                    <tr id="tier-2-row" class="hover:bg-zinc-900/40">
+                                        <td class="p-3 font-bold text-white text-xs">6-10 ตัว</td>
+                                        <td class="p-3 text-emerald-400 font-bold text-xs text-right sm:text-left">320฿ (-30฿)</td>
+                                    </tr>
+                                    <tr id="tier-3-row" class="hover:bg-zinc-900/40">
+                                        <td class="p-3 font-bold text-brand text-xs">11 ตัวขึ้นไป</td>
+                                        <td class="p-3 text-brand font-bold text-xs text-right sm:text-left">299฿ (-51฿)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- SIZE SPECIFICATION -->
+                    <div class="bg-zinc-900/90 p-5 rounded-2xl border border-zinc-800/60 space-y-4 shadow-md">
+                        <div class="flex items-center space-x-2 border-b border-zinc-800/50 pb-2.5">
+                            <span class="text-zinc-400 text-xs">📏</span>
+                            <h3 data-i18n="sizeTableTitle" class="text-xs font-bold tracking-wider text-white uppercase">ตารางไซส์ (Size Spec)</h3>
+                        </div>
+                        <div class="overflow-hidden border border-zinc-800/40 rounded-xl bg-zinc-950/40 text-xs">
+                            <table class="w-full text-left font-medium">
+                                <thead>
+                                    <tr class="bg-zinc-950/60 text-zinc-400 border-b border-zinc-900 text-[11px] font-bold">
+                                        <th class="p-2 px-3">Size</th>
+                                        <th data-i18n="chestCol" class="p-2">อก (นิ้ว)</th>
+                                        <th data-i18n="lengthCol" class="p-2 text-right px-3">ยาว (นิ้ว)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-zinc-900 text-zinc-300">
+                                    <tr class="hover:bg-zinc-900/40"><td class="p-2.5 px-3 font-bold text-white">S</td><td class="p-2.5">36"</td><td class="p-2.5 text-right px-3">26"</td></tr>
+                                    <tr class="hover:bg-zinc-900/40 bg-zinc-900/10"><td class="p-2.5 px-3 font-bold text-white">M</td><td class="p-2.5">38"</td><td class="p-2.5 text-right px-3">27"</td></tr>
+                                    <tr class="hover:bg-zinc-900/40"><td class="p-2.5 px-3 font-bold text-white">L</td><td class="p-2.5">40"</td><td class="p-2.5 text-right px-3">28"</td></tr>
+                                    <tr class="hover:bg-zinc-900/40 bg-zinc-900/10"><td class="p-2.5 px-3 font-bold text-white">XL</td><td class="p-2.5">42"</td><td class="p-2.5 text-right px-3">29"</td></tr>
+                                    <tr class="hover:bg-zinc-900/40"><td class="p-2.5 px-3 font-bold text-white">2XL</td><td class="p-2.5">44"</td><td class="p-2.5 text-right px-3">30"</td></tr>
+                                    <tr class="hover:bg-zinc-900/40"><td class="p-2.5 px-3 font-bold text-white">3XL</td><td class="p-2.5">46"</td><td class="p-2.5 text-right px-3">31"</td></tr>
+                                    <tr class="hover:bg-zinc-900/40 bg-zinc-900/10"><td class="p-2.5 px-3 font-bold text-white">4XL</td><td class="p-2.5">48"</td><td class="p-2.5 text-right px-3">32"</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: GROUP CART ITEMS -->
+                <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800/60 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-bold text-brand tracking-widest uppercase">02 / Live Cart</span>
+                            <h2 data-i18n="cartTitle" class="text-xl font-extrabold tracking-tight text-white mt-0.5">รายการเสื้อในตะกร้ากลุ่ม</h2>
+                        </div>
+                        <button id="export-csv-btn" onclick="exportCartToCSV()" class="hidden bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
+                            📥 Download CSV
+                        </button>
+                    </div>
+
+                    <!-- TIER PROGRESS BAR -->
+                    <div id="tier-progress-container" class="bg-zinc-950/70 p-3.5 rounded-xl border border-zinc-800/80 space-y-2">
+                        <div class="flex justify-between items-center text-[11px] font-bold">
+                            <span id="tier-progress-text" class="text-zinc-400">เพิ่มเสื้อลงตะกร้าเพื่อเริ่มต้นส่วนลดกลุ่ม</span>
+                            <span id="tier-progress-badge" class="text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded-md border border-zinc-800">Tier 1/3 (350฿)</span>
+                        </div>
+                        <div class="w-full bg-zinc-900 rounded-full h-2 overflow-hidden border border-zinc-800/80">
+                            <div id="tier-progress-bar" class="bg-gradient-to-r from-brand to-orange-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div id="cart-items-list" class="space-y-2 max-h-[220px] overflow-y-auto custom-scrollbar pr-1 text-xs">
+                        <div id="cart-empty-msg" class="text-center py-8 text-zinc-600 border border-dashed border-zinc-800 rounded-xl font-medium">
+                            ยังไม่มีรายการเสื้อในตะกร้า เริ่มเลือกลายและระบุรายละเอียดด้านบนเพื่อเพิ่มเข้ากลุ่ม
+                        </div>
+                    </div>
+
+                    <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800/50 grid grid-cols-2 gap-4 text-xs font-semibold">
+                        <div>
+                            <span data-i18n="totalItemsLabel" class="text-zinc-500 block">จำนวนเสื้อทั้งหมด:</span>
+                            <span id="summary-total-qty" class="text-white text-base font-bold">0</span> <span data-i18n="unitQty" class="text-zinc-400 text-[11px]">ตัว</span>
+                        </div>
+                        <div class="text-right">
+                            <span data-i18n="totalPriceLabel" class="text-zinc-500 block">ยอดรวมทั้งสิ้น:</span>
+                            <span id="summary-total-price" class="text-brand text-base font-black">0</span> <span class="text-zinc-400 text-[11px]">THB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: CUSTOMER INFORMATION -->
+                <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800/60 space-y-4">
+                    <div>
+                        <span class="text-xs font-bold text-brand tracking-widest uppercase">03 / Contact & Shipping</span>
+                        <h3 data-i18n="orderInfoTitle" class="text-xl font-extrabold tracking-tight text-white mt-0.5">ข้อมูลผู้สั่งซื้อและสถานที่จัดส่ง</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                        <div>
+                            <label data-i18n="firstNameLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">ชื่อ *</label>
+                            <input type="text" id="input-firstname" placeholder="สมชาย" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition">
+                            <p id="error-firstname" data-i18n="errFirstname" class="text-[10px] text-red-500 mt-1 hidden">กรุณากรอกชื่อ</p>
+                        </div>
+                        <div>
+                            <label data-i18n="lastNameLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">นามสกุล *</label>
+                            <input type="text" id="input-lastname" placeholder="สายลม" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition">
+                            <p id="error-lastname" data-i18n="errLastname" class="text-[10px] text-red-500 mt-1 hidden">กรุณากรอกนามสกุล</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-1">
+                            <label data-i18n="yearLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">ชั้นปี *</label>
+                            <input type="text" id="input-year" maxlength="1" placeholder="3" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition text-center">
+                        </div>
+                        <div class="col-span-2">
+                            <label data-i18n="facultyLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">คณะ *</label>
+                            <input type="text" id="input-faculty" placeholder="วิศวกรรมศาสตร์" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition">
+                            <p id="error-faculty" data-i18n="errFaculty" class="text-[10px] text-red-500 mt-1 hidden">กรุณากรอกคณะและชั้นปี</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label data-i18n="igLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">Instagram / ช่องทางติดต่อผู้สั่ง *</label>
+                            <input type="text" id="input-client-line" placeholder="@username" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition">
+                        </div>
+                        <div>
+                            <label data-i18n="phoneLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">เบอร์โทรศัพท์ผู้สั่ง *</label>
+                            <input type="text" id="input-client-phone" maxlength="10" placeholder="08XXXXXXXX" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition tracking-wider">
+                            <p id="error-phone" data-i18n="errPhone" class="text-[10px] text-red-500 mt-1 hidden">กรุณากรอกเบอร์โทร 10 หลัก</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label data-i18n="addressLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">ที่อยู่จัดส่งรวมล็อต *</label>
+                        <textarea id="input-address" rows="3" placeholder="..." class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition resize-none leading-relaxed"></textarea>
+                    </div>
+
+                    <!-- LEGAL REQUIRED CHECKBOX -->
+                    <div class="flex items-start space-x-3 pt-3 border-t border-zinc-800/50">
+                        <input type="checkbox" id="legal-checkbox" class="mt-1 w-4 h-4 accent-brand rounded border-zinc-800 bg-zinc-950 focus:ring-brand cursor-pointer">
+                        <label for="legal-checkbox" class="text-[11px] text-zinc-400 leading-relaxed font-medium select-none cursor-pointer">
+                            <span data-i18n="legalText1">ข้าพเจ้าได้อ่าน เข้าใจ และยอมรับ</span> 
+                            <button type="button" id="open-legal-btn" data-i18n="legalText2" class="text-blue-400 underline hover:text-blue-300 inline font-bold bg-transparent border-none p-0 cursor-pointer">ข้อตกลง เงื่อนไขการสั่งซื้อสินค้า และการยกเว้นความรับผิดชอบตามกฎหมาย</button 
+                            <span data-i18n="legalText3">ทั้งหมดแล้ว โดยตกลงยอมรับความเสี่ยงในตัวสินค้าและสละสิทธิ์ในการเรียกร้องค่าเสียหายหรือฟ้องร้องดำเนินคดีต่อผู้จัดทำและทีมงานทุกคนในทุกกรณี</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                    <button id="copy-summary-btn" disabled class="sm:w-1/3 bg-zinc-800/80 text-zinc-600 font-bold text-xs tracking-wider py-4 rounded-2xl transition-all duration-300 uppercase cursor-not-allowed border border-transparent flex items-center justify-center gap-1.5 shrink-0">
+                        <span data-i18n="copyBtn">📋 คัดลอกบิลสรุป</span>
+                    </button>
+                    <button id="checkout-btn" disabled class="sm:w-2/3 bg-zinc-800/80 text-zinc-600 font-bold text-xs sm:text-sm tracking-wider py-4 rounded-2xl transition-all duration-300 uppercase cursor-not-allowed border border-transparent shadow-inner">
+                        กรุณากรอกข้อมูลให้ครบถ้วน
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ZONE 3: PREMIUM SELLER CONTACT -->
+    <section id="contact-shop-zone" class="scroll-trigger border-t border-zinc-900 bg-[#070708] py-14 relative overflow-hidden">
+        <div class="ambient-glow w-96 h-96 -bottom-20 right-10 opacity-60"></div>
+        <div class="w-full max-w-full px-4 sm:px-8 mx-auto space-y-8 relative z-10">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <span class="text-xs font-bold text-brand tracking-widest uppercase">Direct Assistance</span>
+                <h2 data-i18n="shopContactTitle" class="text-2xl sm:text-3xl font-black text-white tracking-tight">ติดต่อสอบถามทีมงานผู้ขาย</h2>
+                <p data-i18n="shopContactDesc" class="text-zinc-500 text-xs">หากมีข้อสงสัยเพิ่มเติมเกี่ยวกับเนื้อผ้า ไซส์พิเศษ หรือต้องการปรึกษาการสั่งซื้อติดต่อเราได้ทันที</p>
+            </div>
+
+            <div class="max-w-md mx-auto">
+                <a href="https://instagram.com/justwear.lkb" target="_blank" class="bg-zinc-900/50 hover:bg-zinc-900 border border-zinc-800/60 hover:border-brand p-6 rounded-2xl transition duration-300 group flex flex-col justify-between space-y-3 shadow-sm text-center items-center">
+                    <div class="flex flex-col items-center">
+                        <span class="text-2xl mb-1">📸</span>
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wider">Instagram Portfolio</h4>
+                    </div>
+                    <div class="text-xs font-bold text-zinc-400 group-hover:text-brand transition duration-200">@justwear.lkb</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEGAL TERMS DETAILED MODAL -->
+    <div id="legal-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500">
+        <div class="bg-zinc-900 rounded-3xl w-full max-w-2xl p-6 m-4 shadow-2xl transform scale-95 transition-all duration-300 relative border border-zinc-800 flex flex-col max-h-[85vh]">
+            <h3 class="text-sm sm:text-base font-bold tracking-tight text-white mb-4 border-b border-zinc-800 pb-3 flex justify-between items-center">
+                <span data-i18n="legalModalTitle">ข้อตกลง เงื่อนไขการสั่งซื้อสินค้า และการยกเว้นความรับผิดชอบตามกฎหมาย</span>
+                <button id="close-legal-top" class="text-zinc-500 hover:text-white text-xl font-bold p-1">&times;</button>
+            </h3>
+            
+            <div class="space-y-4 text-xs font-medium text-zinc-400 overflow-y-auto custom-scrollbar pr-2 leading-relaxed flex-1">
+                <p data-i18n="legalIntro" class="text-zinc-300 font-semibold bg-zinc-950 p-3 rounded-xl border border-zinc-900">
+                    การที่ท่านสั่งซื้อสินค้า ชำระเงิน หรือใช้งานเว็บไซต์นี้ ถือว่าท่านได้อ่าน เข้าใจ และให้ความยินยอมผูกพันตามข้อตกลงทางกฎหมายฉบับนี้โดยตระหนักดีแล้วทุกประการ โดยมีข้อกำหนดรายละเอียดดังต่อไปนี้:
+                </p>
+                <div class="space-y-2.5">
+                    <h4 data-i18n="legalSec1Title" class="text-white font-bold text-xs uppercase text-brand">1. การจำกัดความรับผิดชอบและการยกเว้นความรับผิด (Limitation and Exclusion of Liability)</h4>
+                    <p data-i18n="legalSec1_1"><strong class="text-zinc-200">ข้อจำกัดเรื่องขนาดและสี:</strong> สินค้าผลิตในลักษณะอุตสาหกรรม ขนาดของสินค้าจริงอาจมีข้อความคลาดเคลื่อน (Tolerance) จากตารางไซส์ที่แสดงบนหน้าเว็บไซต์ในอัตรา ±1 ถึง 1.5 นิ้ว และสีของสินค้าอาจมีความแตกต่างจากภาพถ่ายโฆษณาอันเนื่องมาจากสภาวะแสง หน้าจอแสดงผล และข้อจำกัดในกระบวนการผลิต (Manufacturing Lots) ผู้จัดทำและทีมงานขอสงวนสิทธิ์ไม่รับผิดชอบในความคลาดเคลื่อนดังกล่าวในทุกกรณี และถือเป็นความเสี่ยงที่ผู้สั่งซื้อยินยอมรับ</p>
+                    <p data-i18n="legalSec1_2"><strong class="text-zinc-200">การยกเว้นความเสียหาย:</strong> ผู้จัดทำ ทีมงาน และผู้เกี่ยวข้องทั้งหมด จะไม่รับผิดชอบต่อความเสียหายทางตรง ความเสียหายทางอ้อม ความเสียหายเกี่ยวเนื่อง ความเสียหายพิเศษ หรือความเสียหายในเชิงลงโทษใดๆ รวมถึงแต่ไม่จำกัดเพียง การสูญเสียโอกาส การสูญเสียรายได้ ความเสียหายทางจิตใจ หรือผลกระทบทางกายภาพอันเกิดจากการใช้งานสินค้า ไม่ว่ากรณีใดก็ตาม</p>
+                    <p data-i18n="legalSec1_3"><strong class="text-zinc-200">การยกเว้นการรับประกัน:</strong> สินค้าจำหน่ายตามสภาพที่เป็นอยู่ (As-is) โดยไม่มีการรับประกันใดๆ ทั้งสิ้น ทั้งโดยชัดแจ้งหรือโดยปริยาย รวมถึงการรับประกันคุณภาพ หรือความเหมาะสมต่อวัตถุประสงค์เฉพาะทาง</p>
+
+                    <h4 data-i18n="legalSec2Title" class="text-white font-bold text-xs uppercase text-brand mt-4">2. นโยบายการไม่รับเปลี่ยนหรือคืนสินค้า (No Return & No Refund Policy)</h4>
+                    <p data-i18n="legalSec2_1"><strong class="text-zinc-200">ข้อบังคับเด็ดขาด:</strong> การสั่งซื้อสินค้าเป็นการสั่งทำพิเศษ (Custom/Made-to-Order) เมื่อท่านยืนยันการสั่งซื้อและชำระเงินแล้ว ถือเป็นข้อตกลงที่สิ้นสุดและสมบูรณ์ <strong class="text-white bg-red-900/40 px-1">ผู้จัดทำและทีมงานขอสงวนสิทธิ์ปฏิเสธการขอคืนเงิน (Refund) การเปลี่ยนสินค้า (Replacement) หรือการยกเลิกคำสั่งซื้อ (Cancellation) ในทุกกรณีอย่างเด็ดขาด</strong> ไม่ว่าจะด้วยเหตุผลใดก็ตาม รวมถึงการเปลี่ยนใจ การสั่งซื้อผิดไซส์ การกรอกข้อมูลชื่อ/หมายเลขผิดพลาด หรือความคลาดเคลื่อนอันเนื่องมาจากขนาดและสีตามที่ระบุในข้อ 1</p>
+
+                    <h4 data-i18n="legalSec3Title" class="text-white font-bold text-xs uppercase text-brand mt-4">3. การสละสิทธิ์ในการเรียกร้องทางกฎหมาย (Waiver of Legal Rights)</h4>
+                    <p data-i18n="legalSec3_1">โดยการยอมรับข้อตกลงนี้ <strong class="text-white">ท่านตกลงสละสิทธิ์ในการดำเนินคดีแพ่ง คดีอาญา หรือเรียกร้องค่าเสียหายใดๆ ต่อผู้จัดทำ ทีมงาน และผู้เกี่ยวข้อง ในทุกกรณีโดยไม่มีข้อแม้</strong> หากเกิดข้อพิพาทขึ้น ท่านตกลงยินยอมให้ข้อตกลงฉบับนี้ใช้เป็นหลักฐานเพื่อระงับและปัดตกคำฟ้องหรือการเรียกร้องของท่านทั้งในศาลและนอกศาลอย่างสมบูรณ์แบบ</p>
+                    
+                    <h4 data-i18n="legalSec4Title" class="text-white font-bold text-xs uppercase text-brand mt-4">4. การรักษาความปลอดภัยและการใช้ข้อมูล (Data Processing)</h4>
+                    <p data-i18n="legalSec4_1">ระบบนี้ไม่มีการจัดเก็บข้อมูลส่วนบุคคลของท่านในเซิร์ฟเวอร์ฐานข้อมูลถาวร ข้อมูลที่ท่านกรอก (ชื่อ, เบอร์โทร, ไลน์, คณะ, ที่อยู่) จะถูกใช้เพื่อสร้างสรุปรายการสั่งซื้อในเครื่องของท่าน (Client-side) เพื่อให้ท่านคัดลอกและส่งผ่านแอปพลิเคชัน LINE ด้วยตัวท่านเองเท่านั้น ทางเว็บไซต์จะไม่รับผิดชอบต่อการรั่วไหลของข้อมูลที่เกิดจากการกระทำของท่าน หรือผ่านแพลตฟอร์มภายนอก</p>
+
+                    <h4 data-i18n="legalSec5Title" class="text-white font-bold text-xs uppercase text-brand mt-4">5. การยอมรับความเสี่ยงและเงื่อนไข (Assumption of Risk and Consent)</h4>
+                    <p data-i18n="legalSec5_1">ท่านขอยืนยันว่าท่านมีวุฒิภาวะและความสามารถในการทำนิติกรรมโดยสมบูรณ์ และได้กระทำการสั่งซื้อนี้ด้วยความสมัครใจโดยปราศจากการข่มขู่หรือหลอกลวงใดๆ และยินยอมรับความเสี่ยงรวมถึงเงื่อนไขความเข้มงวดทั้งหมดตามระบุไว้ข้างต้น</p>
+                </div>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-zinc-800 flex justify-end gap-3 shrink-0">
+                <button id="close-legal-bottom" data-i18n="closeLegalBtn" class="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold rounded-xl transition uppercase tracking-wider">ปิดหน้าต่าง / ทราบและเข้าใจข้อตกลง</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-[#070708] border-t border-zinc-900 pt-8 pb-12 relative text-center">
+        <p class="text-zinc-600 text-[10px] font-medium tracking-wide">
+            © 2026 JUSTWEAR LKB.
+        </p>
+    </footer>
+
+    <script>
+        // ----------------------------------------------------
+        // GOOGLE APPS SCRIPT CONFIGURATION
+        // ----------------------------------------------------
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwChOVD9MqiQXtiWE3DscS1WxOezmhVZ-ydOXjsZe26MVdHKmQwmEz-kczdbWKj1J2m/exec';
+
+        function sendOrderToGoogleSheet(orderData) {
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+                console.warn('ยังไม่ได้ระบุ GOOGLE_SCRIPT_URL ที่ถูกต้อง');
+                return;
+            }
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // ป้องกันปัญหา ติด CORS
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(() => {
+                console.log('บันทึกออเดอร์ลง Google Sheets เรียบร้อยแล้ว');
+            })
+            .catch(error => {
+                console.error('เกิดข้อผิดพลาดในการบันทึกข้อมูล:', error);
+            });
+        }
+
+        // --- TRANSLATIONS (i18n) ---
+        const translations = {
+            th: {
+                navHome: "หน้าแรก", navStudio: "เลือกแบบและสั่งซื้อ", navContact: "ติดต่อผู้ขาย",
+                heroDesc: "เลือกแบบเสื้อเจอร์ซี่ที่คุณชื่นชอบ พร้อมระบบคำนวณราคาส่วนลดอัตโนมัติตามจำนวนตัวสำหรับกลุ่มเพื่อนหรือคณะ",
+                selectDesignTitle: "คลิกเลือกแบบเสื้อที่ต้องการดูภาพตัวอย่าง:",
+                design1Name: "แบบที่ 1 (Graffiti)", design2Name: "แบบที่ 2 (Gothic)", design3Name: "แบบที่ 3 (Cursive)",
+                configTitle: "ระบุรายละเอียดสกรีนและไซส์",
+                currentDesignLabel: "แบบเสื้อที่เลือกอยู่:",
+                nameLabel: "ชื่อสกรีน * (ภาษาอังกฤษเท่านั้น)", numLabel: "หมายเลข * (สูงสุด 3 หลัก)", sizeTitle: "ไซส์เสื้อ",
+                addToCartBtn: "เพิ่มเสื้อตัวนี้ลงตะกร้ากลุ่ม",
+                priceTableTitle: "ส่วนลดกลุ่ม (Bulk Tiers)", sizeTableTitle: "ตารางไซส์ (Size Spec)",
+                chestCol: "อก (นิ้ว)", lengthCol: "ยาว (นิ้ว)",
+                cartTitle: "รายการเสื้อในตะกร้ากลุ่ม", totalItemsLabel: "จำนวนเสื้อทั้งหมด:", unitQty: "ตัว", totalPriceLabel: "ยอดรวมทั้งสิ้น:",
+                orderInfoTitle: "ข้อมูลผู้สั่งซื้อและสถานที่จัดส่ง",
+                firstNameLabel: "ชื่อ *", lastNameLabel: "นามสกุล *", yearLabel: "ชั้นปี *", facultyLabel: "คณะ *", addressLabel: "ที่อยู่จัดส่งรวมล็อต *",
+                igLabel: "Instagram / ช่องทางติดต่อผู้สั่ง *", phoneLabel: "เบอร์โทรศัพท์ผู้สั่ง *", copyBtn: "📋 คัดลอกบิลสรุป",
+                shopContactTitle: "ติดต่อสอบถามทีมงานผู้ขาย", shopContactDesc: "หากมีข้อสงสัยเพิ่มเติมเกี่ยวกับเนื้อผ้า ไซส์พิเศษ หรือต้องการปรึกษาการสั่งซื้อติดต่อเราได้ทันที",
+                errName: "กรุณากรอกชื่อสกรีน (ภาษาอังกฤษ)", errNum: "กรุณากรอกหมายเลข 1-3 หลัก", errSize: "กรุณาเลือกไซส์เสื้อ",
+                errFirstname: "กรุณากรอกชื่อ", errLastname: "กรุณากรอกนามสกุล", errFaculty: "กรุณากรอกคณะและชั้นปี", errPhone: "กรุณากรอกเบอร์โทร 10 หลัก",
+                legalText1: "ข้าพเจ้าได้อ่าน เข้าใจ และยอมรับ", legalText2: "ข้อตกลง เงื่อนไขการสั่งซื้อสินค้า และการยกเว้นความรับผิดชอบตามกฎหมาย", legalText3: "ทั้งหมดแล้ว โดยตกลงยอมรับความเสี่ยงในตัวสินค้าและสละสิทธิ์ในการเรียกร้องค่าเสียหายหรือฟ้องร้องดำเนินคดีต่อผู้จัดทำและทีมงานทุกคนในทุกกรณี",
+                btnReady: "ยืนยันและสั่งซื้อผ่าน LINE", btnEmpty: "ไม่มีสินค้าในตะกร้า", btnTerms: "กรุณายอมรับเงื่อนไขเพื่อดำเนินการต่อ", btnFill: "กรุณากรอกข้อมูลให้ครบถ้วน",
+                
+                // ชุดคำแปลสำหรับ Legal Modal
+                legalModalTitle: "ข้อตกลง เงื่อนไขการสั่งซื้อสินค้า และการยกเว้นความรับผิดชอบตามกฎหมาย",
+                legalIntro: "การที่ท่านสั่งซื้อสินค้า ชำระเงิน หรือใช้งานเว็บไซต์นี้ ถือว่าท่านได้อ่าน เข้าใจ และให้ความยินยอมผูกพันตามข้อตกลงทางกฎหมายฉบับนี้โดยตระหนักดีแล้วทุกประการ โดยมีข้อกำหนดรายละเอียดดังต่อไปนี้:",
+                legalSec1Title: "1. การจำกัดความรับผิดชอบและการยกเว้นความรับผิด (Limitation and Exclusion of Liability)",
+                legalSec1_1: "<strong class='text-zinc-200'>ข้อจำกัดเรื่องขนาดและสี:</strong> สินค้าผลิตในลักษณะอุตสาหกรรม ขนาดของสินค้าจริงอาจมีข้อความคลาดเคลื่อน (Tolerance) จากตารางไซส์ที่แสดงบนหน้าเว็บไซต์ในอัตรา ±1 ถึง 1.5 นิ้ว และสีของสินค้าอาจมีความแตกต่างจากภาพถ่ายโฆษณาอันเนื่องมาจากสภาวะแสง หน้าจอแสดงผล และข้อจำกัดในกระบวนการผลิต (Manufacturing Lots) ผู้จัดทำและทีมงานขอสงวนสิทธิ์ไม่รับผิดชอบในความคลาดเคลื่อนดังกล่าวในทุกกรณี และถือเป็นความเสี่ยงที่ผู้สั่งซื้อยินยอมรับ",
+                legalSec1_2: "<strong class='text-zinc-200'>การยกเว้นความเสียหาย:</strong> ผู้จัดทำ ทีมงาน และผู้เกี่ยวข้องทั้งหมด จะไม่รับผิดชอบต่อความเสียหายทางตรง ความเสียหายทางอ้อม ความเสียหายเกี่ยวเนื่อง ความเสียหายพิเศษ หรือความเสียหายในเชิงลงโทษใดๆ รวมถึงแต่ไม่จำกัดเพียง การสูญเสียโอกาส การสูญเสียรายได้ ความเสียหายทางจิตใจ หรือผลกระทบทางกายภาพอันเกิดจากการใช้งานสินค้า ไม่ว่ากรณีใดก็ตาม",
+                legalSec1_3: "<strong class='text-zinc-200'>การยกเว้นการรับประกัน:</strong> สินค้าจำหน่ายตามสภาพที่เป็นอยู่ (As-is) โดยไม่มีการรับประกันใดๆ ทั้งสิ้น ทั้งโดยชัดแจ้งหรือโดยปริยาย รวมถึงการรับประกันคุณภาพ หรือความเหมาะสมต่อวัตถุประสงค์เฉพาะทาง",
+                legalSec2Title: "2. นโยบายการไม่รับเปลี่ยนหรือคืนสินค้า (No Return & No Refund Policy)",
+                legalSec2_1: "<strong class='text-zinc-200'>ข้อบังคับเด็ดขาด:</strong> การสั่งซื้อสินค้าเป็นการสั่งทำพิเศษ (Custom/Made-to-Order) เมื่อท่านยืนยันการสั่งซื้อและชำระเงินแล้ว ถือเป็นข้อตกลงที่สิ้นสุดและสมบูรณ์ <strong class='text-white bg-red-900/40 px-1'>ผู้จัดทำและทีมงานขอสงวนสิทธิ์ปฏิเสธการขอคืนเงิน (Refund) การเปลี่ยนสินค้า (Replacement) หรือการยกเลิกคำสั่งซื้อ (Cancellation) ในทุกกรณีอย่างเด็ดขาด</strong> ไม่ว่าจะด้วยเหตุผลใดก็ตาม รวมถึงการเปลี่ยนใจ การสั่งซื้อผิดไซส์ การกรอกข้อมูลชื่อ/หมายเลขผิดพลาด หรือความคลาดเคลื่อนอันเนื่องมาจากขนาดและสีตามที่ระบุในข้อ 1",
+                legalSec3Title: "3. การสละสิทธิ์ในการเรียกร้องทางกฎหมาย (Waiver of Legal Rights)",
+                legalSec3_1: "โดยการยอมรับข้อตกลงนี้ <strong class='text-white'>ท่านตกลงสละสิทธิ์ในการดำเนินคดีแพ่ง คดีอาญา หรือเรียกร้องค่าเสียหายใดๆ ต่อผู้จัดทำ ทีมงาน และผู้เกี่ยวข้อง ในทุกกรณีโดยไม่มีข้อแม้</strong> หากเกิดข้อพิพาทขึ้น ท่านตกลงยินยอมให้ข้อตกลงฉบับนี้ใช้เป็นหลักฐานเพื่อระงับและปัดตกคำฟ้องหรือการเรียกร้องของท่านทั้งในศาลและนอกศาลอย่างสมบูรณ์แบบ",
+                legalSec4Title: "4. การรักษาความปลอดภัยและการใช้ข้อมูล (Data Processing)",
+                legalSec4_1: "ระบบนี้ไม่มีการจัดเก็บข้อมูลส่วนบุคคลของท่านในเซิร์ฟเวอร์ฐานข้อมูลถาวร ข้อมูลที่ท่านกรอก (ชื่อ, เบอร์โทร, ไลน์, คณะ, ที่อยู่) จะถูกใช้เพื่อสร้างสรุปรายการสั่งซื้อในเครื่องของท่าน (Client-side) เพื่อให้ท่านคัดลอกและส่งผ่านแอปพลิเคชัน LINE ด้วยตัวท่านเองเท่านั้น ทางเว็บไซต์จะไม่รับผิดชอบต่อการรั่วไหลของข้อมูลที่เกิดจากการกระทำของท่าน หรือผ่านแพลตฟอร์มภายนอก",
+                legalSec5Title: "5. การยอมรับความเสี่ยงและเงื่อนไข (Assumption of Risk and Consent)",
+                legalSec5_1: "ท่านขอยืนยันว่าท่านมีวุฒิภาวะและความสามารถในการทำนิติกรรมโดยสมบูรณ์ และได้กระทำการสั่งซื้อนี้ด้วยความสมัครใจโดยปราศจากการข่มขู่หรือหลอกลวงใดๆ และยินยอมรับความเสี่ยงรวมถึงเงื่อนไขความเข้มงวดทั้งหมดตามระบุไว้ข้างต้น",
+                closeLegalBtn: "ปิดหน้าต่าง / ทราบและเข้าใจข้อตกลง"
+            },
+            en: {
+                navHome: "HOME", navStudio: "CUSTOMIZE", navContact: "CONTACT",
+                heroDesc: "Select your favorite jersey design. Automated bulk discount calculation system for groups and faculties.",
+                selectDesignTitle: "CLICK TO PREVIEW DESIGN:",
+                design1Name: "Design 1 (Graffiti)", design2Name: "Design 2 (Gothic)", design3Name: "Design 3 (Cursive)",
+                configTitle: "CUSTOMIZE DETAILS",
+                currentDesignLabel: "CURRENTLY SELECTED:",
+                nameLabel: "NAME ON BACK * (ENG ONLY)", numLabel: "NUMBER * (MAX 3 DIGITS)", sizeTitle: "SELECT SIZE",
+                addToCartBtn: "ADD ITEM TO GROUP CART",
+                priceTableTitle: "BULK DISCOUNT TIERS", sizeTableTitle: "SIZE SPECIFICATIONS",
+                chestCol: "CHEST (in)", lengthCol: "LENGTH (in)",
+                cartTitle: "GROUP CART ITEMS", totalItemsLabel: "TOTAL QUANTITY:", unitQty: "PCS", totalPriceLabel: "GRAND TOTAL:",
+                orderInfoTitle: "CONTACT & SHIPPING DETAILS",
+                firstNameLabel: "FIRST NAME *", lastNameLabel: "LAST NAME *", yearLabel: "YEAR *", facultyLabel: "FACULTY *", addressLabel: "BULK SHIPPING ADDRESS *",
+                igLabel: "INSTAGRAM / CONTACT *", phoneLabel: "PHONE NUMBER *", copyBtn: "📋 COPY SUMMARY",
+                shopContactTitle: "DIRECT ASSISTANCE", shopContactDesc: "For fabric details, special sizes, or order consultation, contact us directly.",
+                errName: "PLEASE ENTER NAME (ENG)", errNum: "PLEASE ENTER NUMBER", errSize: "PLEASE SELECT A SIZE",
+                errFirstname: "PLEASE ENTER FIRST NAME", errLastname: "PLEASE ENTER LAST NAME", errFaculty: "PLEASE ENTER FACULTY", errPhone: "ENTER 10-DIGIT PHONE",
+                legalText1: "I have read, understood, and accept all", legalText2: "Terms & Conditions and Legal Disclaimers", legalText3: "agreeing to assume all product risks and waiving the right to claim damages or sue the creators in any case.",
+                btnReady: "PROCEED TO LINE ORDER", btnEmpty: "CART IS EMPTY", btnTerms: "ACCEPT TERMS TO PROCEED", btnFill: "FILL REQUIRED INFO",
+                
+                // Translations for Legal Modal
+                legalModalTitle: "Terms and Conditions of Purchase and Legal Disclaimers",
+                legalIntro: "By placing an order, making a payment, or using this website, you acknowledge that you have read, understood, and fully agree to be bound by this legal agreement. The specific conditions are as follows:",
+                legalSec1Title: "1. Limitation and Exclusion of Liability",
+                legalSec1_1: "<strong class='text-zinc-200'>Size and Color Variations:</strong> Products are industrially manufactured. Actual sizes may have a tolerance of ±1 to 1.5 inches from the size chart. Product colors may slightly differ from promotional images due to lighting, display screens, and manufacturing lots. The creators and team reserve the right not to be held liable for such discrepancies under any circumstances, and this is a risk accepted by the buyer.",
+                legalSec1_2: "<strong class='text-zinc-200'>Exclusion of Damages:</strong> The creators, team, and all related parties shall not be liable for any direct, indirect, incidental, special, or punitive damages, including but not limited to loss of opportunity, loss of income, mental distress, or physical impact arising from the use of the product under any circumstances.",
+                legalSec1_3: "<strong class='text-zinc-200'>Disclaimer of Warranties:</strong> Products are sold 'As-is' without any warranties, express or implied, including warranties of quality or fitness for a particular purpose.",
+                legalSec2Title: "2. No Return & No Refund Policy",
+                legalSec2_1: "<strong class='text-zinc-200'>Strict Enforcement:</strong> Orders are Custom/Made-to-Order. Once confirmed and paid, the agreement is final. <strong class='text-white bg-red-900/40 px-1'>The team strictly reserves the right to refuse refunds, replacements, or cancellations under any circumstances,</strong> regardless of the reason, including change of mind, ordering the wrong size, incorrect name/number input, or size/color variations stated in Section 1.",
+                legalSec3Title: "3. Waiver of Legal Rights",
+                legalSec3_1: "By accepting this agreement, <strong class='text-white'>you waive the right to pursue civil, criminal, or any damage claims against the creators, team, and related parties under all circumstances without exception.</strong> In the event of a dispute, you consent to the use of this agreement as evidence to dismiss any claims in and out of court completely.",
+                legalSec4Title: "4. Data Security and Processing",
+                legalSec4_1: "This system does not store your personal data on any permanent database server. The information entered (Name, Phone, LINE, Faculty, Address) is used solely to generate an order summary on your device (Client-side) for you to copy and send via the LINE application yourself. The website is not responsible for any data leaks caused by your actions or external platforms.",
+                legalSec5Title: "5. Assumption of Risk and Consent",
+                legalSec5_1: "You confirm that you are of legal age and fully capable of entering into a legal transaction, and that you have placed this order voluntarily without any coercion or deceit, accepting all risks and strict conditions stated above.",
+                closeLegalBtn: "CLOSE / I UNDERSTAND AND ACCEPT"
+            }
+        };
+
+        let currentLang = 'th';
+        const t = (key) => translations[currentLang][key] || key;
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            
+            // อัปเดตข้อความทั่วไป และรองรับแท็ก HTML ด้านใน (ใช้ innerHTML แทน innerText)
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                el.innerHTML = t(el.getAttribute('data-i18n'));
+            });
+            
+            // อัปเดตสถานะปุ่ม Navbar ให้สวยงาม
+            const btnTh = document.getElementById('btn-lang-th');
+            const btnEn = document.getElementById('btn-lang-en');
+            if(btnTh && btnEn) {
+                if(lang === 'th') {
+                    btnTh.className = "px-3 py-1.5 rounded-lg text-white bg-zinc-700 font-bold transition";
+                    btnEn.className = "px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition";
+                } else {
+                    btnEn.className = "px-3 py-1.5 rounded-lg text-white bg-zinc-700 font-bold transition";
+                    btnTh.className = "px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition";
+                }
+            }
+
+            updatePlaceholders();
+            updateCartDisplay();
+            validateCheckoutForm();
+        }
+
+        function updatePlaceholders() {
+            const placeholders = {
+                th: {
+                    'input-name': 'ชื่อภาษาอังกฤษ...',
+                    'input-number': '0-999',
+                    'input-firstname': 'สมชาย',
+                    'input-lastname': 'สายลม',
+                    'input-year': 'เช่น 3',
+                    'input-faculty': 'วิศวกรรมศาสตร์',
+                    'input-address': 'ที่อยู่สำหรับจัดส่งรวม...',
+                    'input-client-line': '@username',
+                    'input-client-phone': '08XXXXXXXX'
+                },
+                en: {
+                    'input-name': 'ALAN',
+                    'input-number': '07',
+                    'input-firstname': 'John',
+                    'input-lastname': 'Doe',
+                    'input-year': 'e.g. 3',
+                    'input-faculty': 'Engineering',
+                    'input-address': 'Bulk shipping address...',
+                    'input-client-line': '@username',
+                    'input-client-phone': '08XXXXXXXX'
+                }
+            };
+            const currentP = placeholders[currentLang];
+            Object.keys(currentP).forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.placeholder = currentP[id];
+            });
+        }
+
+        // Welcome Modal Function
+        function initLanguage(lang) {
+            updateLanguage(lang);
+            const modal = document.getElementById('welcome-lang-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                modal.remove();
+                document.body.style.overflow = ''; // Restore scroll
+            }, 500);
+        }
+
+        // Lock scroll initially for the modal
+        document.body.style.overflow = 'hidden';
+
+        // --- CORE LOGIC ---
+        let currentDesignData = { id: '1', nameKey: 'design1Name' };
+        let selectedSize = '';
+        let cartItems = [];
+
+        // DOM Elements
+        const designBtns = document.querySelectorAll('.design-btn');
+        const designPreviewImg = document.getElementById('design-preview-img');
+        const currentDesignNameLabel = document.getElementById('current-design-name');
+        
+        const sizeBtns = document.querySelectorAll('.size-btn');
+        const inputName = document.getElementById('input-name');
+        const inputNumber = document.getElementById('input-number');
+        
+        const errorName = document.getElementById('error-name');
+        const errorNumber = document.getElementById('error-number');
+        const errorSize = document.getElementById('error-size');
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+
+        // Customer Info DOM
+        const inputFirstname = document.getElementById('input-firstname');
+        const inputLastname = document.getElementById('input-lastname');
+        const inputYear = document.getElementById('input-year');
+        const inputFaculty = document.getElementById('input-faculty');
+        const inputPhone = document.getElementById('input-client-phone');
+        const inputLine = document.getElementById('input-client-line');
+        const inputAddress = document.getElementById('input-address');
+        const legalCheckbox = document.getElementById('legal-checkbox');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const copySummaryBtn = document.getElementById('copy-summary-btn');
+
+        // UI Helpers
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const icon = type === 'success' ? '✓' : '⚠';
+            const color = type === 'success' ? 'bg-brand/20 border-brand/50 text-brand' : 'bg-red-500/20 border-red-500/50 text-red-500';
+            
+            toast.className = `toast-enter flex items-center space-x-3 bg-[#0c0c0e] border ${color} px-4 py-3 rounded-xl shadow-2xl`;
+            toast.innerHTML = `<span class="font-bold text-lg">${icon}</span><span class="text-xs font-semibold text-white tracking-wide">${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.replace('toast-enter', 'toast-exit');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // Design Selection
+        designBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Reset styles
+                designBtns.forEach(b => {
+                    b.classList.remove('border-2', 'border-brand', 'opacity-100');
+                    b.classList.add('border', 'border-zinc-800', 'opacity-70');
+                    b.querySelector('span').classList.remove('text-brand', 'text-white');
+                    b.querySelector('span').classList.add('text-zinc-400');
+                });
+                
+                // Active style
+                btn.classList.add('border-2', 'border-brand', 'opacity-100');
+                btn.classList.remove('border', 'border-zinc-800', 'opacity-70');
+                btn.querySelector('span').classList.remove('text-zinc-400');
+                btn.querySelector('span').classList.add('text-brand');
+
+                // Update Data & Preview
+                const designId = btn.getAttribute('data-design');
+                const designImgSrc = btn.querySelector('img').src;
+                const designNameKey = `design${designId}Name`;
+                
+                currentDesignData = { id: designId, nameKey: designNameKey };
+                
+                // Update Label Translator
+                currentDesignNameLabel.setAttribute('data-i18n', designNameKey);
+                currentDesignNameLabel.innerText = t(designNameKey);
+                
+                // Animate image change
+                designPreviewImg.style.opacity = 0;
+                setTimeout(() => {
+                    designPreviewImg.src = designImgSrc;
+                    designPreviewImg.style.opacity = 1;
+                }, 200);
+            });
+        });
+
+        // Size Selection
+        sizeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                sizeBtns.forEach(b => {
+                    b.classList.remove('border-brand', 'text-brand', 'bg-zinc-900');
+                    b.classList.add('border-zinc-800', 'text-zinc-400', 'bg-zinc-950');
+                });
+                btn.classList.add('border-brand', 'text-brand', 'bg-zinc-900');
+                btn.classList.remove('border-zinc-800', 'text-zinc-400', 'bg-zinc-950');
+                selectedSize = btn.getAttribute('data-size');
+                errorSize.classList.add('hidden');
+            });
+        });
+
+        // Validate English Name
+        inputName.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase();
+            e.target.value = val;
+            if(val.trim() !== '') errorName.classList.add('hidden');
+        });
+
+        // Validate Number (0-9 only)
+        inputNumber.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/[^0-9]/g, '');
+            e.target.value = val;
+            if(val.trim() !== '') errorNumber.classList.add('hidden');
+        });
+
+        // Add to Cart
+        addToCartBtn.addEventListener('click', () => {
+            let isValid = true;
+            const nameVal = inputName.value.trim();
+            const numVal = inputNumber.value.trim();
+
+            if (!nameVal) { errorName.classList.remove('hidden'); isValid = false; }
+            if (!numVal) { errorNumber.classList.remove('hidden'); isValid = false; }
+            if (!selectedSize) { errorSize.classList.remove('hidden'); isValid = false; }
+
+            if (!isValid) return;
+
+            cartItems.push({
+                designId: currentDesignData.id,
+                designNameKey: currentDesignData.nameKey,
+                screenName: nameVal,
+                screenNumber: numVal,
+                size: selectedSize
+            });
+
+            // Reset forms
+            inputName.value = '';
+            inputNumber.value = '';
+            selectedSize = '';
+            sizeBtns.forEach(b => {
+                b.classList.remove('border-brand', 'text-brand', 'bg-zinc-900');
+                b.classList.add('border-zinc-800', 'text-zinc-400', 'bg-zinc-950');
+            });
+
+            updateCartDisplay();
+            validateCheckoutForm();
+            showToast(currentLang === 'en' ? 'Item added to group cart' : 'เพิ่มเสื้อลงตะกร้าเรียบร้อย');
+        });
+
+        function calculateTier(qty) {
+            if(qty === 0) return { price: 0, desc: '-', percent: 0 };
+            if(qty >= 11) return { price: 299, desc: 'Tier 3 (299฿)', percent: 100, target: 11 };
+            if(qty >= 6) return { price: 320, desc: 'Tier 2 (320฿)', percent: Math.round((qty/11)*100), target: 11 };
+            return { price: 350, desc: 'Tier 1 (350฿)', percent: Math.round((qty/6)*100), target: 6 };
+        }
+
+        function updateCartDisplay() {
+            const listEl = document.getElementById('cart-items-list');
+            const qtyEl = document.getElementById('summary-total-qty');
+            const priceEl = document.getElementById('summary-total-price');
+            const exportBtn = document.getElementById('export-csv-btn');
+            
+            const progressBar = document.getElementById('tier-progress-bar');
+            const progressText = document.getElementById('tier-progress-text');
+            const progressBadge = document.getElementById('tier-progress-badge');
+
+            const qty = cartItems.length;
+            const tierInfo = calculateTier(qty);
+            const total = qty * tierInfo.price;
+
+            qtyEl.innerText = qty;
+            priceEl.innerText = new Intl.NumberFormat('th-TH').format(total);
+
+            // Update Tier UI
+            progressBar.style.width = `${tierInfo.percent}%`;
+            progressBadge.innerText = tierInfo.desc;
+            
+            if(qty === 0) {
+                progressText.innerText = currentLang === 'en' ? "Add items to unlock bulk discounts" : "เพิ่มเสื้อลงตะกร้าเพื่อเริ่มต้นส่วนลดกลุ่ม";
+                progressBadge.innerText = "Tier 1/3 (350฿)";
+            } else if (qty < 6) {
+                progressText.innerText = currentLang === 'en' ? `Add ${6-qty} more for Tier 2 discount (-30฿)` : `ขาดอีก ${6-qty} ตัว เพื่อรับส่วนลด Tier 2 (-30฿)`;
+                progressText.classList.replace('text-zinc-400', 'text-brand');
+            } else if (qty < 11) {
+                progressText.innerText = currentLang === 'en' ? `Add ${11-qty} more for Max Tier 3 (-51฿)` : `ขาดอีก ${11-qty} ตัว เพื่อรับส่วนลดสูงสุด Tier 3 (-51฿)`;
+                progressText.classList.replace('text-zinc-400', 'text-brand');
+            } else {
+                progressText.innerText = currentLang === 'en' ? "MAXIMUM DISCOUNT UNLOCKED" : "ปลดล็อกส่วนลดกลุ่มสูงสุดแล้ว 🎉";
+                progressText.classList.replace('text-brand', 'text-emerald-400');
+                progressBar.classList.replace('from-brand', 'from-emerald-400');
+                progressBar.classList.replace('to-orange-400', 'to-emerald-500');
+                progressBadge.classList.replace('bg-zinc-900', 'bg-emerald-950');
+                progressBadge.classList.replace('text-zinc-500', 'text-emerald-400');
+            }
+
+            // Update Table Highlight
+            document.querySelectorAll('tr[id^="tier-"]').forEach(tr => {
+                tr.classList.remove('border-l-2', 'border-brand', 'bg-zinc-900/40');
+            });
+            if(qty >= 11) {
+                document.getElementById('tier-3-row').classList.add('border-l-2', 'border-brand', 'bg-zinc-900/40');
+            } else if (qty >= 6) {
+                document.getElementById('tier-2-row').classList.add('border-l-2', 'border-brand', 'bg-zinc-900/40');
+            } else if (qty > 0) {
+                document.getElementById('tier-1-row').classList.add('border-l-2', 'border-brand', 'bg-zinc-900/40');
+            }
+
+            if (qty === 0) {
+                listEl.innerHTML = `<div class="text-center py-8 text-zinc-600 border border-dashed border-zinc-800 rounded-xl font-medium">${currentLang === 'en' ? "Cart is empty. Configure items above to add." : "ยังไม่มีรายการเสื้อในตะกร้า เริ่มเลือกลายและระบุรายละเอียดด้านบนเพื่อเพิ่มเข้ากลุ่ม"}</div>`;
+                exportBtn.classList.add('hidden');
+                return;
+            }
+
+            exportBtn.classList.remove('hidden');
+            let html = '';
+            cartItems.forEach((item, index) => {
+                html += `
+                    <div class="flex justify-between items-center bg-zinc-950 p-3.5 rounded-xl border border-zinc-800 hover:border-zinc-700 transition group">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-zinc-900 text-zinc-500 flex items-center justify-center font-bold text-[10px]">${index+1}</div>
+                            <div>
+                                <div class="font-bold text-white text-xs">${item.screenName} <span class="text-brand">#${item.screenNumber}</span></div>
+                                <div class="text-[10px] text-zinc-500 mt-0.5">${t(item.designNameKey)}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-md font-black text-xs min-w-[32px] text-center">${item.size}</span>
+                            <button onclick="removeItem(${index})" class="text-zinc-600 hover:text-red-500 transition opacity-50 group-hover:opacity-100" title="Remove">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+            listEl.innerHTML = html;
+        }
+
+        window.removeItem = function(index) {
+            cartItems.splice(index, 1);
+            updateCartDisplay();
+            validateCheckoutForm();
+        };
+
+        // --- EXPORT & CHECKOUT LOGIC ---
+
+        function exportCartToCSV() {
+            if(cartItems.length === 0) return;
+            
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            csvContent += "No,Design,Screen Name,Number,Size\n";
+            
+            cartItems.forEach((item, index) => {
+                const row = `${index + 1},"${t(item.designNameKey)}","${item.screenName}","${item.screenNumber}","${item.size}"`;
+                csvContent += row + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `justwear_group_order_${new Date().getTime()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast(currentLang === 'en' ? "CSV Downloaded!" : "ดาวน์โหลดไฟล์ CSV แล้ว");
+        }
+
+        // Form Validation for Checkout
+        const requiredInputs = [inputFirstname, inputLastname, inputYear, inputFaculty, inputPhone, inputLine, inputAddress];
+        
+        function validateCheckoutForm() {
+            let allFilled = true;
+            requiredInputs.forEach(input => {
+                if(!input.value.trim()) allFilled = false;
+            });
+            if(inputPhone.value.replace(/[^0-9]/g, '').length !== 10) allFilled = false;
+            if(!legalCheckbox.checked) allFilled = false;
+            if(cartItems.length === 0) allFilled = false;
+
+            if(allFilled) {
+                checkoutBtn.disabled = false;
+                checkoutBtn.classList.remove('bg-zinc-800/80', 'text-zinc-600', 'cursor-not-allowed', 'shadow-inner');
+                checkoutBtn.classList.add('bg-brand', 'text-white', 'hover:bg-orange-600', 'shadow-lg', 'shadow-brand/20');
+                checkoutBtn.innerText = t('btnReady');
+
+                copySummaryBtn.disabled = false;
+                copySummaryBtn.classList.remove('bg-zinc-800/80', 'text-zinc-600', 'cursor-not-allowed');
+                copySummaryBtn.classList.add('bg-zinc-900', 'text-white', 'hover:bg-zinc-800', 'border-zinc-700');
+            } else {
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('bg-zinc-800/80', 'text-zinc-600', 'cursor-not-allowed', 'shadow-inner');
+                checkoutBtn.classList.remove('bg-brand', 'text-white', 'hover:bg-orange-600', 'shadow-lg', 'shadow-brand/20');
+                
+                if(cartItems.length === 0) checkoutBtn.innerText = t('btnEmpty');
+                else if(!legalCheckbox.checked) checkoutBtn.innerText = t('btnTerms');
+                else checkoutBtn.innerText = t('btnFill');
+
+                copySummaryBtn.disabled = true;
+                copySummaryBtn.classList.add('bg-zinc-800/80', 'text-zinc-600', 'cursor-not-allowed');
+                copySummaryBtn.classList.remove('bg-zinc-900', 'text-white', 'hover:bg-zinc-800', 'border-zinc-700');
+            }
+        }
+
+        requiredInputs.forEach(input => {
+            input.addEventListener('input', validateCheckoutForm);
+        });
+        legalCheckbox.addEventListener('change', validateCheckoutForm);
+        inputPhone.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+
+        // Generate Summary Text
+        function generateOrderSummary() {
+            const qty = cartItems.length;
+            const tierInfo = calculateTier(qty);
+            const total = qty * tierInfo.price;
+
+            let summary = `🔥 สรุปรายการสั่งซื้อ JUSTWEAR LKB 🔥\n\n`;
+            summary += `👤 ข้อมูลผู้สั่ง (หัวหน้ากลุ่ม)\n`;
+            summary += `ชื่อ-สกุล: ${inputFirstname.value.trim()} ${inputLastname.value.trim()}\n`;
+            summary += `คณะ: ${inputFaculty.value.trim()} ปี ${inputYear.value.trim()}\n`;
+            summary += `เบอร์โทร: ${inputPhone.value.trim()}\n`;
+            summary += `Instagram/ติดต่อ: ${inputLine.value.trim()}\n`;
+            summary += `\n📍 ที่อยู่จัดส่งล็อต:\n${inputAddress.value.trim()}\n\n`;
+            
+            summary += `👕 รายการเสื้อ (${qty} ตัว):\n`;
+            cartItems.forEach((item, index) => {
+                summary += `${index+1}. ${t(item.designNameKey)} | ${item.screenName} #${item.screenNumber} | Size ${item.size}\n`;
+            });
+            
+            summary += `\n💰 ยอดชำระเงิน:\n`;
+            summary += `จำนวน: ${qty} ตัว (เรท ${tierInfo.desc})\n`;
+            summary += `รวมทั้งสิ้น: ${new Intl.NumberFormat('th-TH').format(total)} บาท\n`;
+            summary += `\n✅ ข้าพเจ้ายอมรับเงื่อนไขการสั่งซื้อเรียบร้อยแล้ว`;
+
+            return summary;
+        }
+
+        // Copy and Checkout Handlers
+        copySummaryBtn.addEventListener('click', () => {
+            const text = generateOrderSummary();
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(currentLang === 'en' ? "Summary copied to clipboard!" : "คัดลอกบิลสรุปแล้ว นำไปวางในแชทได้เลย!");
+            });
+        });
+
+        checkoutBtn.addEventListener('click', () => {
+            if(checkoutBtn.disabled) return;
+
+            // 1. เตรียมข้อมูลเพื่อบันทึกลง Google Sheets
+            const qty = cartItems.length;
+            const tierInfo = calculateTier(qty);
+            const total = qty * tierInfo.price;
+
+            const itemsFormatted = cartItems.map((item, idx) => 
+                `${idx + 1}. ${t(item.designNameKey)} | ${item.screenName} #${item.screenNumber} | Size ${item.size}`
+            ).join('\n');
+
+            const orderData = {
+                name: `${inputFirstname.value.trim()} ${inputLastname.value.trim()} (${inputFaculty.value.trim()} ปี ${inputYear.value.trim()})`,
+                phone: `Tel: ${inputPhone.value.trim()} / IG: ${inputLine.value.trim()} / ที่อยู่: ${inputAddress.value.trim()}`,
+                items: itemsFormatted,
+                total: total
+            };
+
+            // 2. ส่งข้อมูลบันทึกลง Google Sheets
+            sendOrderToGoogleSheet(orderData);
+
+            // 3. คัดลอกข้อความสรุป และเปิดแอปพลิเคชัน LINE
+            const text = generateOrderSummary();
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(currentLang === 'en' ? "Data copied & saved! Opening LINE..." : "คัดลอกข้อมูลและบันทึกออเดอร์แล้ว! กำลังเปิด LINE...");
+                setTimeout(() => {
+                    // เปลี่ยน YOUR_SHOP_LINE_ID เป็น Line ID ของร้านคุณ (เช่น @justwearlkb)
+                    window.open('https://line.me/ti/p/~YOUR_SHOP_LINE_ID', '_blank');
+                }, 1000);
+            });
+        });
+
+        // --- LEGAL MODAL LOGIC ---
+        const modal = document.getElementById('legal-modal');
+        const openModalBtn = document.getElementById('open-legal-btn');
+        const closeTopBtn = document.getElementById('close-legal-top');
+        const closeBottomBtn = document.getElementById('close-legal-bottom');
+
+        function openModal() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.remove('scale-95');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.add('scale-95');
+        }
+
+        openModalBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+        
+        closeTopBtn.addEventListener('click', closeModal);
+        closeBottomBtn.addEventListener('click', () => {
+            legalCheckbox.checked = true;
+            validateCheckoutForm();
+            closeModal();
+            showToast(currentLang === 'en' ? 'Terms accepted' : 'คุณยอมรับเงื่อนไขแล้ว');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+
+        // --- SCROLL ANIMATIONS ---
+        const observerOptions = {
+            root: null, rootMargin: '0px', threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-trigger').forEach(el => {
+            observer.observe(el);
+        });
+
+    </script>
+</body>
+</html>
