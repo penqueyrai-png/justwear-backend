@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUSTWEAR LKB - ULTIMATE APPAREL LAB</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -104,7 +105,6 @@
                 <a href="#custom-zone" data-i18n="navStudio" class="hover:text-brand text-zinc-400 transition hidden md:inline">เลือกแบบและสั่งซื้อ</a>
                 <a href="#contact-shop-zone" data-i18n="navContact" class="hover:text-brand text-zinc-100 font-semibold transition">ติดต่อผู้ขาย</a>
                 
-                <!-- ปุ่มเปลี่ยนภาษาแบบเต็ม -->
                 <div class="flex items-center gap-1 bg-zinc-800/80 p-1 rounded-xl border border-zinc-700/50 text-xs font-medium">
                     <button id="btn-lang-th" onclick="updateLanguage('th')" class="px-3 py-1.5 rounded-lg text-white bg-zinc-700 font-bold transition">
                         ภาษาไทย
@@ -136,18 +136,14 @@
             
             <!-- LEFT COLUMN: STICKY PREVIEW IMAGE DISPLAY -->
             <div class="scroll-trigger lg:sticky lg:top-24 lg:col-span-6 w-full flex flex-col items-center justify-center space-y-4">
-                
-                <!-- Preview Container -->
                 <div class="relative w-full aspect-[4/3] bg-zinc-900/80 rounded-3xl border border-zinc-800/80 flex items-center justify-center overflow-hidden shadow-2xl p-4 group">
                     <div class="ambient-glow w-96 h-96"></div>
-                    
                     <img id="design-preview-img" 
                          src="https://i.ibb.co/zTbYfYND/S-2555913.jpg" 
                          alt="Jersey Design Preview" 
                          class="w-full h-full object-contain relative z-10 transition-all duration-300 transform group-hover:scale-105">
                 </div>
 
-                <!-- Design Selector Thumbnails -->
                 <div class="w-full space-y-2">
                     <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block text-center" data-i18n="selectDesignTitle">คลิกเลือกแบบเสื้อที่ต้องการดูภาพตัวอย่าง:</span>
                     <div class="grid grid-cols-3 gap-3">
@@ -169,7 +165,6 @@
 
             <!-- RIGHT COLUMN: CONTROL PANEL CONFIGURATOR -->
             <div class="scroll-trigger lg:col-span-6 space-y-6 w-full">
-                
                 <!-- STEP 1: CONFIGURE ITEM -->
                 <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800/60 space-y-5">
                     <div>
@@ -177,13 +172,11 @@
                         <h2 data-i18n="configTitle" class="text-xl font-extrabold tracking-tight text-white mt-0.5">ระบุรายละเอียดสกรีนและไซส์</h2>
                     </div>
 
-                    <!-- Selected Design Label -->
                     <div class="bg-zinc-950 p-3.5 rounded-xl border border-zinc-800 flex justify-between items-center">
                         <span class="text-xs text-zinc-400 font-medium" data-i18n="currentDesignLabel">แบบเสื้อที่เลือกอยู่:</span>
                         <span id="current-design-name" data-i18n="design1Name" class="text-xs font-bold text-brand uppercase">แบบที่ 1 (Graffiti)</span>
                     </div>
 
-                    <!-- Personalization Details -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-zinc-800/50 pt-4">
                         <div>
                             <label data-i18n="nameLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">ชื่อสกรีน * (ภาษาอังกฤษเท่านั้น)</label>
@@ -197,7 +190,6 @@
                         </div>
                     </div>
 
-                    <!-- Sizes Selection -->
                     <div class="border-t border-zinc-800/50 pt-4 space-y-2">
                         <h3 data-i18n="sizeTitle" class="text-xs font-bold text-zinc-400 tracking-wider uppercase">ไซส์เสื้อ</h3>
                         <div id="size-container" class="grid grid-cols-4 sm:grid-cols-7 gap-2">
@@ -212,7 +204,6 @@
                         <p id="error-size" data-i18n="errSize" class="text-[10px] text-red-500 mt-1 hidden">กรุณาเลือกไซส์เสื้อ</p>
                     </div>
 
-                    <!-- Add to Cart -->
                     <div class="pt-2">
                         <button id="add-to-cart-btn" class="w-full bg-brand hover:bg-orange-600 text-white font-bold text-xs tracking-wider py-3.5 rounded-xl transition duration-200 uppercase flex items-center justify-center gap-2 shadow-lg shadow-brand/10">
                             <span>+</span> <span data-i18n="addToCartBtn">เพิ่มเสื้อตัวนี้ลงตะกร้ากลุ่ม</span>
@@ -222,7 +213,6 @@
 
                 <!-- PRICE & SIZE REFERENCE -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- PRICE TIERS -->
                     <div class="bg-zinc-900/90 p-5 rounded-2xl border border-zinc-800/60 space-y-4 shadow-md">
                         <div class="flex items-center space-x-2 border-b border-zinc-800/50 pb-2.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-brand animate-pulse"></span>
@@ -248,7 +238,6 @@
                         </div>
                     </div>
 
-                    <!-- SIZE SPECIFICATION -->
                     <div class="bg-zinc-900/90 p-5 rounded-2xl border border-zinc-800/60 space-y-4 shadow-md">
                         <div class="flex items-center space-x-2 border-b border-zinc-800/50 pb-2.5">
                             <span class="text-zinc-400 text-xs">📏</span>
@@ -289,7 +278,6 @@
                         </button>
                     </div>
 
-                    <!-- TIER PROGRESS BAR -->
                     <div id="tier-progress-container" class="bg-zinc-950/70 p-3.5 rounded-xl border border-zinc-800/80 space-y-2">
                         <div class="flex justify-between items-center text-[11px] font-bold">
                             <span id="tier-progress-text" class="text-zinc-400">เพิ่มเสื้อลงตะกร้าเพื่อเริ่มต้นส่วนลดกลุ่ม</span>
@@ -353,7 +341,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label data-i18n="igLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">Instagram / ช่องทางติดต่อผู้สั่ง *</label>
-                            <input type="text" id="input-client-line" placeholder="@username" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition">
+                            <input type="text" id="input-client-contact" placeholder="@username" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition">
                         </div>
                         <div>
                             <label data-i18n="phoneLabel" class="block text-[11px] text-zinc-400 font-medium mb-1.5">เบอร์โทรศัพท์ผู้สั่ง *</label>
@@ -367,18 +355,16 @@
                         <textarea id="input-address" rows="3" placeholder="..." class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand rounded-xl px-4 py-3 text-xs font-medium text-white outline-none transition resize-none leading-relaxed"></textarea>
                     </div>
 
-                    <!-- LEGAL REQUIRED CHECKBOX -->
                     <div class="flex items-start space-x-3 pt-3 border-t border-zinc-800/50">
                         <input type="checkbox" id="legal-checkbox" class="mt-1 w-4 h-4 accent-brand rounded border-zinc-800 bg-zinc-950 focus:ring-brand cursor-pointer">
                         <label for="legal-checkbox" class="text-[11px] text-zinc-400 leading-relaxed font-medium select-none cursor-pointer">
                             <span data-i18n="legalText1">ข้าพเจ้าได้อ่าน เข้าใจ และยอมรับ</span> 
-                            <button type="button" id="open-legal-btn" data-i18n="legalText2" class="text-blue-400 underline hover:text-blue-300 inline font-bold bg-transparent border-none p-0 cursor-pointer">ข้อตกลง เงื่อนไขการสั่งซื้อสินค้า และการยกเว้นความรับผิดชอบตามกฎหมาย</button 
+                            <button type="button" id="open-legal-btn" data-i18n="legalText2" class="text-blue-400 underline hover:text-blue-300 inline font-bold bg-transparent border-none p-0 cursor-pointer">ข้อตกลง เงื่อนไขการสั่งซื้อสินค้า และการยกเว้นความรับผิดชอบตามกฎหมาย</button> 
                             <span data-i18n="legalText3">ทั้งหมดแล้ว โดยตกลงยอมรับความเสี่ยงในตัวสินค้าและสละสิทธิ์ในการเรียกร้องค่าเสียหายหรือฟ้องร้องดำเนินคดีต่อผู้จัดทำและทีมงานทุกคนในทุกกรณี</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- ACTION BUTTONS -->
                 <div class="pt-2 flex flex-col sm:flex-row gap-3">
                     <button id="copy-summary-btn" disabled class="sm:w-1/3 bg-zinc-800/80 text-zinc-600 font-bold text-xs tracking-wider py-4 rounded-2xl transition-all duration-300 uppercase cursor-not-allowed border border-transparent flex items-center justify-center gap-1.5 shrink-0">
                         <span data-i18n="copyBtn">📋 คัดลอกบิลสรุป</span>
@@ -413,6 +399,46 @@
         </div>
     </section>
 
+    <!-- PROMPTPAY PAYMENT MODAL -->
+    <div id="payment-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[80] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500">
+        <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-3xl max-w-md w-full mx-4 text-center space-y-5 shadow-2xl relative transform scale-95 transition-all duration-300">
+            <button id="close-payment-modal" class="absolute top-4 right-4 text-zinc-500 hover:text-white text-xl font-bold p-1">&times;</button>
+            <div>
+                <span class="text-xs font-bold text-brand tracking-widest uppercase">Payment Step</span>
+                <h3 class="text-xl font-black text-white tracking-tight mt-1">ชำระเงินผ่าน PromptPay</h3>
+                <p class="text-xs text-zinc-400 mt-1">สแกน QR Code ด้านล่าง ยอดเงินจะถูกระบุให้อัตโนมัติ</p>
+            </div>
+
+            <!-- Dynamic QR Display Container -->
+            <div class="bg-white p-4 rounded-2xl inline-block shadow-inner mx-auto">
+                <div id="qrcode-canvas" class="flex justify-center items-center min-w-[180px] min-h-[180px]">
+                    <img id="promptpay-qr-img" src="" alt="PromptPay QR Code" class="w-[180px] h-[180px] object-contain">
+                </div>
+            </div>
+
+            <div class="bg-zinc-950 p-3.5 rounded-xl border border-zinc-800 text-xs space-y-1 text-left">
+                <div class="flex justify-between items-center">
+                    <span class="text-zinc-500">บัญชีพร้อมเพย์:</span>
+                    <span class="text-white font-mono font-bold">063-912-9254 (JUSTWEAR LKB)</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-zinc-500">ยอดชำระสุทธิ:</span>
+                    <span id="promptpay-amount-display" class="text-brand font-black text-sm">0.00 THB</span>
+                </div>
+            </div>
+
+            <!-- Slip Upload Field -->
+            <div class="text-left space-y-1.5">
+                <label class="block text-[11px] text-zinc-400 font-medium">แนบสลิปการโอนเงิน *</label>
+                <input type="file" id="slip-file-input" accept="image/*" class="w-full text-xs text-zinc-400 bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 cursor-pointer border-dashed focus:outline-none file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-200 hover:file:bg-brand hover:file:text-white transition">
+            </div>
+
+            <button id="confirm-payment-btn" class="w-full bg-brand hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-brand/20">
+                ยืนยันการชำระเงินและส่งคำสั่งซื้อ
+            </button>
+        </div>
+    </div>
+
     <!-- LEGAL TERMS DETAILED MODAL -->
     <div id="legal-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500">
         <div class="bg-zinc-900 rounded-3xl w-full max-w-2xl p-6 m-4 shadow-2xl transform scale-95 transition-all duration-300 relative border border-zinc-800 flex flex-col max-h-[85vh]">
@@ -435,10 +461,10 @@
                     <p data-i18n="legalSec2_1"><strong class="text-zinc-200">ข้อบังคับเด็ดขาด:</strong> การสั่งซื้อสินค้าเป็นการสั่งทำพิเศษ (Custom/Made-to-Order) เมื่อท่านยืนยันการสั่งซื้อและชำระเงินแล้ว ถือเป็นข้อตกลงที่สิ้นสุดและสมบูรณ์ <strong class="text-white bg-red-900/40 px-1">ผู้จัดทำและทีมงานขอสงวนสิทธิ์ปฏิเสธการขอคืนเงิน (Refund) การเปลี่ยนสินค้า (Replacement) หรือการยกเลิกคำสั่งซื้อ (Cancellation) ในทุกกรณีอย่างเด็ดขาด</strong> ไม่ว่าจะด้วยเหตุผลใดก็ตาม รวมถึงการเปลี่ยนใจ การสั่งซื้อผิดไซส์ การกรอกข้อมูลชื่อ/หมายเลขผิดพลาด หรือความคลาดเคลื่อนอันเนื่องมาจากขนาดและสีตามที่ระบุในข้อ 1</p>
 
                     <h4 data-i18n="legalSec3Title" class="text-white font-bold text-xs uppercase text-brand mt-4">3. การสละสิทธิ์ในการเรียกร้องทางกฎหมาย (Waiver of Legal Rights)</h4>
-                    <p data-i18n="legalSec3_1">โดยการยอมรับข้อตกลงนี้ <strong class="text-white">ท่านตกลงสละสิทธิ์ในการดำเนินคดีแพ่ง คดีอาญา หรือเรียกร้องค่าเสียหายใดๆ ต่อผู้จัดทำ ทีมงาน และผู้เกี่ยวข้อง ในทุกกรณีโดยไม่มีข้อแม้</strong> หากเกิดข้อพิพาทขึ้น ท่านตกลงยินยอมให้ข้อตกลงฉบับนี้ใช้เป็นหลักฐานเพื่อระงับและปัดตกคำฟ้องหรือการเรียกร้องของท่านทั้งในศาลและนอกศาลอย่างสมบูรณ์แบบ</p>
+                    <p data-i18n="legalSec3_1">โดยการยอมรับข้อตกลงนี้ <strong class="text-white">ท่านตกลงสละสิทธิ์ในการดำเนินคดีแพ่ง คดีอาญา หรือเรียกร้องค่าเสียหายใดๆ ต่อผู้จัดทำ ทีมงาน และผู้เกี่ยวข้อง ในทุกกรณีโดยไม่มีข้อแม่</strong> หากเกิดข้อพิพาทขึ้น ท่านตกลงยินยอมให้ข้อตกลงฉบับนี้ใช้เป็นหลักฐานเพื่อระงับและปัดตกคำฟ้องหรือการเรียกร้องของท่านทั้งในศาลและนอกศาลอย่างสมบูรณ์แบบ</p>
                     
                     <h4 data-i18n="legalSec4Title" class="text-white font-bold text-xs uppercase text-brand mt-4">4. การรักษาความปลอดภัยและการใช้ข้อมูล (Data Processing)</h4>
-                    <p data-i18n="legalSec4_1">ระบบนี้ไม่มีการจัดเก็บข้อมูลส่วนบุคคลของท่านในเซิร์ฟเวอร์ฐานข้อมูลถาวร ข้อมูลที่ท่านกรอก (ชื่อ, เบอร์โทร, ไลน์, คณะ, ที่อยู่) จะถูกใช้เพื่อสร้างสรุปรายการสั่งซื้อในเครื่องของท่าน (Client-side) เพื่อให้ท่านคัดลอกและส่งผ่านแอปพลิเคชัน LINE ด้วยตัวท่านเองเท่านั้น ทางเว็บไซต์จะไม่รับผิดชอบต่อการรั่วไหลของข้อมูลที่เกิดจากการกระทำของท่าน หรือผ่านแพลตฟอร์มภายนอก</p>
+                    <p data-i18n="legalSec4_1">ระบบนี้ไม่มีการจัดเก็บข้อมูลส่วนบุคคลของท่านในเซิร์ฟเวอร์ฐานข้อมูลถาวร ข้อมูลที่ท่านกรอก (ชื่อ, เบอร์โทร, ช่องทางติดต่อ, คณะ, ที่อยู่) จะถูกใช้เพื่อสร้างสรุปรายการสั่งซื้อในเครื่องของท่าน (Client-side) และบันทึกลงในระบบจัดการคำสั่งซื้อเท่านั้น ทางเว็บไซต์จะไม่รับผิดชอบต่อการรั่วไหลของข้อมูลที่เกิดจากการกระทำของท่าน หรือผ่านแพลตฟอร์มภายนอก</p>
 
                     <h4 data-i18n="legalSec5Title" class="text-white font-bold text-xs uppercase text-brand mt-4">5. การยอมรับความเสี่ยงและเงื่อนไข (Assumption of Risk and Consent)</h4>
                     <p data-i18n="legalSec5_1">ท่านขอยืนยันว่าท่านมีวุฒิภาวะและความสามารถในการทำนิติกรรมโดยสมบูรณ์ และได้กระทำการสั่งซื้อนี้ด้วยความสมัครใจโดยปราศจากการข่มขู่หรือหลอกลวงใดๆ และยินยอมรับความเสี่ยงรวมถึงเงื่อนไขความเข้มงวดทั้งหมดตามระบุไว้ข้างต้น</p>
@@ -459,29 +485,24 @@
 
     <script>
         // ----------------------------------------------------
-        // GOOGLE APPS SCRIPT CONFIGURATION
+        // CONFIGURATION
         // ----------------------------------------------------
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwChOVD9MqiQXtiWE3DscS1WxOezmhVZ-ydOXjsZe26MVdHKmQwmEz-kczdbWKj1J2m/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhBFTVtwAp63vUvTLXaAm6ehsOnJusHL6xfe_F0x10F-XBow3fFNtdKphtrnnSyfBc/exec';
+        const PROMPTPAY_ID = '0639129254'; // เบอร์พร้อมเพย์รับเงินของคุณ
 
         function sendOrderToGoogleSheet(orderData) {
             if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
                 console.warn('ยังไม่ได้ระบุ GOOGLE_SCRIPT_URL ที่ถูกต้อง');
-                return;
+                return Promise.reject('URL ไม่ถูกต้อง');
             }
 
-            fetch(GOOGLE_SCRIPT_URL, {
+            return fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors', // ป้องกันปัญหา ติด CORS
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(orderData)
-            })
-            .then(() => {
-                console.log('บันทึกออเดอร์ลง Google Sheets เรียบร้อยแล้ว');
-            })
-            .catch(error => {
-                console.error('เกิดข้อผิดพลาดในการบันทึกข้อมูล:', error);
             });
         }
 
@@ -506,9 +527,8 @@
                 errName: "กรุณากรอกชื่อสกรีน (ภาษาอังกฤษ)", errNum: "กรุณากรอกหมายเลข 1-3 หลัก", errSize: "กรุณาเลือกไซส์เสื้อ",
                 errFirstname: "กรุณากรอกชื่อ", errLastname: "กรุณากรอกนามสกุล", errFaculty: "กรุณากรอกคณะและชั้นปี", errPhone: "กรุณากรอกเบอร์โทร 10 หลัก",
                 legalText1: "ข้าพเจ้าได้อ่าน เข้าใจ และยอมรับ", legalText2: "ข้อตกลง เงื่อนไขการสั่งซื้อสินค้า และการยกเว้นความรับผิดชอบตามกฎหมาย", legalText3: "ทั้งหมดแล้ว โดยตกลงยอมรับความเสี่ยงในตัวสินค้าและสละสิทธิ์ในการเรียกร้องค่าเสียหายหรือฟ้องร้องดำเนินคดีต่อผู้จัดทำและทีมงานทุกคนในทุกกรณี",
-                btnReady: "ยืนยันและสั่งซื้อผ่าน LINE", btnEmpty: "ไม่มีสินค้าในตะกร้า", btnTerms: "กรุณายอมรับเงื่อนไขเพื่อดำเนินการต่อ", btnFill: "กรุณากรอกข้อมูลให้ครบถ้วน",
+                btnReady: "ยืนยันการสั่งซื้อสินค้า", btnEmpty: "ไม่มีสินค้าในตะกร้า", btnTerms: "กรุณายอมรับเงื่อนไขเพื่อดำเนินการต่อ", btnFill: "กรุณากรอกข้อมูลให้ครบถ้วน",
                 
-                // ชุดคำแปลสำหรับ Legal Modal
                 legalModalTitle: "ข้อตกลง เงื่อนไขการสั่งซื้อสินค้า และการยกเว้นความรับผิดชอบตามกฎหมาย",
                 legalIntro: "การที่ท่านสั่งซื้อสินค้า ชำระเงิน หรือใช้งานเว็บไซต์นี้ ถือว่าท่านได้อ่าน เข้าใจ และให้ความยินยอมผูกพันตามข้อตกลงทางกฎหมายฉบับนี้โดยตระหนักดีแล้วทุกประการ โดยมีข้อกำหนดรายละเอียดดังต่อไปนี้:",
                 legalSec1Title: "1. การจำกัดความรับผิดชอบและการยกเว้นความรับผิด (Limitation and Exclusion of Liability)",
@@ -518,9 +538,9 @@
                 legalSec2Title: "2. นโยบายการไม่รับเปลี่ยนหรือคืนสินค้า (No Return & No Refund Policy)",
                 legalSec2_1: "<strong class='text-zinc-200'>ข้อบังคับเด็ดขาด:</strong> การสั่งซื้อสินค้าเป็นการสั่งทำพิเศษ (Custom/Made-to-Order) เมื่อท่านยืนยันการสั่งซื้อและชำระเงินแล้ว ถือเป็นข้อตกลงที่สิ้นสุดและสมบูรณ์ <strong class='text-white bg-red-900/40 px-1'>ผู้จัดทำและทีมงานขอสงวนสิทธิ์ปฏิเสธการขอคืนเงิน (Refund) การเปลี่ยนสินค้า (Replacement) หรือการยกเลิกคำสั่งซื้อ (Cancellation) ในทุกกรณีอย่างเด็ดขาด</strong> ไม่ว่าจะด้วยเหตุผลใดก็ตาม รวมถึงการเปลี่ยนใจ การสั่งซื้อผิดไซส์ การกรอกข้อมูลชื่อ/หมายเลขผิดพลาด หรือความคลาดเคลื่อนอันเนื่องมาจากขนาดและสีตามที่ระบุในข้อ 1",
                 legalSec3Title: "3. การสละสิทธิ์ในการเรียกร้องทางกฎหมาย (Waiver of Legal Rights)",
-                legalSec3_1: "โดยการยอมรับข้อตกลงนี้ <strong class='text-white'>ท่านตกลงสละสิทธิ์ในการดำเนินคดีแพ่ง คดีอาญา หรือเรียกร้องค่าเสียหายใดๆ ต่อผู้จัดทำ ทีมงาน และผู้เกี่ยวข้อง ในทุกกรณีโดยไม่มีข้อแม้</strong> หากเกิดข้อพิพาทขึ้น ท่านตกลงยินยอมให้ข้อตกลงฉบับนี้ใช้เป็นหลักฐานเพื่อระงับและปัดตกคำฟ้องหรือการเรียกร้องของท่านทั้งในศาลและนอกศาลอย่างสมบูรณ์แบบ",
+                legalSec3_1: "โดยการยอมรับข้อตกลงนี้ <strong class='text-white'>ท่านตกลงสละสิทธิ์ในการดำเนินคดีแพ่ง คดีอาญา หรือเรียกร้องค่าเสียหายใดๆ ต่อผู้จัดทำ ทีมงาน และผู้เกี่ยวข้อง ในทุกกรณีโดยไม่มีข้อแม่</strong> หากเกิดข้อพิพาทขึ้น ท่านตกลงยินยอมให้ข้อตกลงฉบับนี้ใช้เป็นหลักฐานเพื่อระงับและปัดตกคำฟ้องหรือการเรียกร้องของท่านทั้งในศาลและนอกศาลอย่างสมบูรณ์แบบ",
                 legalSec4Title: "4. การรักษาความปลอดภัยและการใช้ข้อมูล (Data Processing)",
-                legalSec4_1: "ระบบนี้ไม่มีการจัดเก็บข้อมูลส่วนบุคคลของท่านในเซิร์ฟเวอร์ฐานข้อมูลถาวร ข้อมูลที่ท่านกรอก (ชื่อ, เบอร์โทร, ไลน์, คณะ, ที่อยู่) จะถูกใช้เพื่อสร้างสรุปรายการสั่งซื้อในเครื่องของท่าน (Client-side) เพื่อให้ท่านคัดลอกและส่งผ่านแอปพลิเคชัน LINE ด้วยตัวท่านเองเท่านั้น ทางเว็บไซต์จะไม่รับผิดชอบต่อการรั่วไหลของข้อมูลที่เกิดจากการกระทำของท่าน หรือผ่านแพลตฟอร์มภายนอก",
+                legalSec4_1: "ระบบนี้ไม่มีการจัดเก็บข้อมูลส่วนบุคคลของท่านในเซิร์ฟเวอร์ฐานข้อมูลถาวร ข้อมูลที่ท่านกรอก (ชื่อ, เบอร์โทร, ช่องทางติดต่อ, คณะ, ที่อยู่) จะถูกใช้เพื่อสร้างสรุปรายการสั่งซื้อในเครื่องของท่าน (Client-side) และบันทึกลงในระบบจัดการคำสั่งซื้อเท่านั้น ทางเว็บไซต์จะไม่รับผิดชอบต่อการรั่วไหลของข้อมูลที่เกิดจากการกระทำของท่าน หรือผ่านแพลตฟอร์มภายนอก",
                 legalSec5Title: "5. การยอมรับความเสี่ยงและเงื่อนไข (Assumption of Risk and Consent)",
                 legalSec5_1: "ท่านขอยืนยันว่าท่านมีวุฒิภาวะและความสามารถในการทำนิติกรรมโดยสมบูรณ์ และได้กระทำการสั่งซื้อนี้ด้วยความสมัครใจโดยปราศจากการข่มขู่หรือหลอกลวงใดๆ และยินยอมรับความเสี่ยงรวมถึงเงื่อนไขความเข้มงวดทั้งหมดตามระบุไว้ข้างต้น",
                 closeLegalBtn: "ปิดหน้าต่าง / ทราบและเข้าใจข้อตกลง"
@@ -544,9 +564,8 @@
                 errName: "PLEASE ENTER NAME (ENG)", errNum: "PLEASE ENTER NUMBER", errSize: "PLEASE SELECT A SIZE",
                 errFirstname: "PLEASE ENTER FIRST NAME", errLastname: "PLEASE ENTER LAST NAME", errFaculty: "PLEASE ENTER FACULTY", errPhone: "ENTER 10-DIGIT PHONE",
                 legalText1: "I have read, understood, and accept all", legalText2: "Terms & Conditions and Legal Disclaimers", legalText3: "agreeing to assume all product risks and waiving the right to claim damages or sue the creators in any case.",
-                btnReady: "PROCEED TO LINE ORDER", btnEmpty: "CART IS EMPTY", btnTerms: "ACCEPT TERMS TO PROCEED", btnFill: "FILL REQUIRED INFO",
+                btnReady: "SUBMIT ORDER NOW", btnEmpty: "CART IS EMPTY", btnTerms: "ACCEPT TERMS TO PROCEED", btnFill: "FILL REQUIRED INFO",
                 
-                // Translations for Legal Modal
                 legalModalTitle: "Terms and Conditions of Purchase and Legal Disclaimers",
                 legalIntro: "By placing an order, making a payment, or using this website, you acknowledge that you have read, understood, and fully agree to be bound by this legal agreement. The specific conditions are as follows:",
                 legalSec1Title: "1. Limitation and Exclusion of Liability",
@@ -558,7 +577,7 @@
                 legalSec3Title: "3. Waiver of Legal Rights",
                 legalSec3_1: "By accepting this agreement, <strong class='text-white'>you waive the right to pursue civil, criminal, or any damage claims against the creators, team, and related parties under all circumstances without exception.</strong> In the event of a dispute, you consent to the use of this agreement as evidence to dismiss any claims in and out of court completely.",
                 legalSec4Title: "4. Data Security and Processing",
-                legalSec4_1: "This system does not store your personal data on any permanent database server. The information entered (Name, Phone, LINE, Faculty, Address) is used solely to generate an order summary on your device (Client-side) for you to copy and send via the LINE application yourself. The website is not responsible for any data leaks caused by your actions or external platforms.",
+                legalSec4_1: "This system does not store your personal data on any permanent database server. The information entered (Name, Phone, Contact, Faculty, Address) is used solely to generate an order summary on your device (Client-side) and record to order system. The website is not responsible for any data leaks caused by your actions or external platforms.",
                 legalSec5Title: "5. Assumption of Risk and Consent",
                 legalSec5_1: "You confirm that you are of legal age and fully capable of entering into a legal transaction, and that you have placed this order voluntarily without any coercion or deceit, accepting all risks and strict conditions stated above.",
                 closeLegalBtn: "CLOSE / I UNDERSTAND AND ACCEPT"
@@ -571,12 +590,10 @@
         function updateLanguage(lang) {
             currentLang = lang;
             
-            // อัปเดตข้อความทั่วไป และรองรับแท็ก HTML ด้านใน (ใช้ innerHTML แทน innerText)
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 el.innerHTML = t(el.getAttribute('data-i18n'));
             });
             
-            // อัปเดตสถานะปุ่ม Navbar ให้สวยงาม
             const btnTh = document.getElementById('btn-lang-th');
             const btnEn = document.getElementById('btn-lang-en');
             if(btnTh && btnEn) {
@@ -604,7 +621,7 @@
                     'input-year': 'เช่น 3',
                     'input-faculty': 'วิศวกรรมศาสตร์',
                     'input-address': 'ที่อยู่สำหรับจัดส่งรวม...',
-                    'input-client-line': '@username',
+                    'input-client-contact': '@username',
                     'input-client-phone': '08XXXXXXXX'
                 },
                 en: {
@@ -615,7 +632,7 @@
                     'input-year': 'e.g. 3',
                     'input-faculty': 'Engineering',
                     'input-address': 'Bulk shipping address...',
-                    'input-client-line': '@username',
+                    'input-client-contact': '@username',
                     'input-client-phone': '08XXXXXXXX'
                 }
             };
@@ -626,18 +643,16 @@
             });
         }
 
-        // Welcome Modal Function
         function initLanguage(lang) {
             updateLanguage(lang);
             const modal = document.getElementById('welcome-lang-modal');
             modal.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => {
                 modal.remove();
-                document.body.style.overflow = ''; // Restore scroll
+                document.body.style.overflow = '';
             }, 500);
         }
 
-        // Lock scroll initially for the modal
         document.body.style.overflow = 'hidden';
 
         // --- CORE LOGIC ---
@@ -665,13 +680,12 @@
         const inputYear = document.getElementById('input-year');
         const inputFaculty = document.getElementById('input-faculty');
         const inputPhone = document.getElementById('input-client-phone');
-        const inputLine = document.getElementById('input-client-line');
+        const inputContact = document.getElementById('input-client-contact');
         const inputAddress = document.getElementById('input-address');
         const legalCheckbox = document.getElementById('legal-checkbox');
         const checkoutBtn = document.getElementById('checkout-btn');
         const copySummaryBtn = document.getElementById('copy-summary-btn');
 
-        // UI Helpers
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -693,7 +707,6 @@
         // Design Selection
         designBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Reset styles
                 designBtns.forEach(b => {
                     b.classList.remove('border-2', 'border-brand', 'opacity-100');
                     b.classList.add('border', 'border-zinc-800', 'opacity-70');
@@ -701,24 +714,20 @@
                     b.querySelector('span').classList.add('text-zinc-400');
                 });
                 
-                // Active style
                 btn.classList.add('border-2', 'border-brand', 'opacity-100');
                 btn.classList.remove('border', 'border-zinc-800', 'opacity-70');
                 btn.querySelector('span').classList.remove('text-zinc-400');
                 btn.querySelector('span').classList.add('text-brand');
 
-                // Update Data & Preview
                 const designId = btn.getAttribute('data-design');
                 const designImgSrc = btn.querySelector('img').src;
                 const designNameKey = `design${designId}Name`;
                 
                 currentDesignData = { id: designId, nameKey: designNameKey };
                 
-                // Update Label Translator
                 currentDesignNameLabel.setAttribute('data-i18n', designNameKey);
                 currentDesignNameLabel.innerText = t(designNameKey);
                 
-                // Animate image change
                 designPreviewImg.style.opacity = 0;
                 setTimeout(() => {
                     designPreviewImg.src = designImgSrc;
@@ -741,14 +750,13 @@
             });
         });
 
-        // Validate English Name
+        // Validation
         inputName.addEventListener('input', (e) => {
             let val = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase();
             e.target.value = val;
             if(val.trim() !== '') errorName.classList.add('hidden');
         });
 
-        // Validate Number (0-9 only)
         inputNumber.addEventListener('input', (e) => {
             let val = e.target.value.replace(/[^0-9]/g, '');
             e.target.value = val;
@@ -775,7 +783,6 @@
                 size: selectedSize
             });
 
-            // Reset forms
             inputName.value = '';
             inputNumber.value = '';
             selectedSize = '';
@@ -813,7 +820,6 @@
             qtyEl.innerText = qty;
             priceEl.innerText = new Intl.NumberFormat('th-TH').format(total);
 
-            // Update Tier UI
             progressBar.style.width = `${tierInfo.percent}%`;
             progressBadge.innerText = tierInfo.desc;
             
@@ -835,7 +841,6 @@
                 progressBadge.classList.replace('text-zinc-500', 'text-emerald-400');
             }
 
-            // Update Table Highlight
             document.querySelectorAll('tr[id^="tier-"]').forEach(tr => {
                 tr.classList.remove('border-l-2', 'border-brand', 'bg-zinc-900/40');
             });
@@ -881,8 +886,6 @@
             validateCheckoutForm();
         };
 
-        // --- EXPORT & CHECKOUT LOGIC ---
-
         function exportCartToCSV() {
             if(cartItems.length === 0) return;
             
@@ -904,8 +907,7 @@
             showToast(currentLang === 'en' ? "CSV Downloaded!" : "ดาวน์โหลดไฟล์ CSV แล้ว");
         }
 
-        // Form Validation for Checkout
-        const requiredInputs = [inputFirstname, inputLastname, inputYear, inputFaculty, inputPhone, inputLine, inputAddress];
+        const requiredInputs = [inputFirstname, inputLastname, inputYear, inputFaculty, inputPhone, inputContact, inputAddress];
         
         function validateCheckoutForm() {
             let allFilled = true;
@@ -948,7 +950,6 @@
             e.target.value = e.target.value.replace(/[^0-9]/g, '');
         });
 
-        // Generate Summary Text
         function generateOrderSummary() {
             const qty = cartItems.length;
             const tierInfo = calculateTier(qty);
@@ -959,7 +960,7 @@
             summary += `ชื่อ-สกุล: ${inputFirstname.value.trim()} ${inputLastname.value.trim()}\n`;
             summary += `คณะ: ${inputFaculty.value.trim()} ปี ${inputYear.value.trim()}\n`;
             summary += `เบอร์โทร: ${inputPhone.value.trim()}\n`;
-            summary += `Instagram/ติดต่อ: ${inputLine.value.trim()}\n`;
+            summary += `Instagram/ติดต่อ: ${inputContact.value.trim()}\n`;
             summary += `\n📍 ที่อยู่จัดส่งล็อต:\n${inputAddress.value.trim()}\n\n`;
             
             summary += `👕 รายการเสื้อ (${qty} ตัว):\n`;
@@ -975,45 +976,105 @@
             return summary;
         }
 
-        // Copy and Checkout Handlers
         copySummaryBtn.addEventListener('click', () => {
             const text = generateOrderSummary();
             navigator.clipboard.writeText(text).then(() => {
-                showToast(currentLang === 'en' ? "Summary copied to clipboard!" : "คัดลอกบิลสรุปแล้ว นำไปวางในแชทได้เลย!");
+                showToast(currentLang === 'en' ? "Summary copied to clipboard!" : "คัดลอกบิลสรุปแล้ว!");
             });
         });
 
-        checkoutBtn.addEventListener('click', () => {
-            if(checkoutBtn.disabled) return;
+        // --- PROMPTPAY DISPLAY LOGIC (USING DIRECT API) ---
+        const paymentModal = document.getElementById('payment-modal');
+        const closePaymentModalBtn = document.getElementById('close-payment-modal');
+        const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
+        const promptpayQrImg = document.getElementById('promptpay-qr-img');
+        const promptpayAmountDisplay = document.getElementById('promptpay-amount-display');
+        const slipFileInput = document.getElementById('slip-file-input');
 
-            // 1. เตรียมข้อมูลเพื่อบันทึกลง Google Sheets
+        function generatePromptPayQR(amount) {
+            const formattedAmount = parseFloat(amount).toFixed(2);
+            promptpayQrImg.src = `https://promptpay.io/${PROMPTPAY_ID}/${formattedAmount}.png`;
+        }
+
+        function openPaymentModal() {
             const qty = cartItems.length;
             const tierInfo = calculateTier(qty);
             const total = qty * tierInfo.price;
 
-            const itemsFormatted = cartItems.map((item, idx) => 
-                `${idx + 1}. ${t(item.designNameKey)} | ${item.screenName} #${item.screenNumber} | Size ${item.size}`
-            ).join('\n');
+            promptpayAmountDisplay.innerText = `${new Intl.NumberFormat('th-TH', { minimumFractionDigits: 2 }).format(total)} THB`;
+            generatePromptPayQR(total);
 
-            const orderData = {
-                name: `${inputFirstname.value.trim()} ${inputLastname.value.trim()} (${inputFaculty.value.trim()} ปี ${inputYear.value.trim()})`,
-                phone: `Tel: ${inputPhone.value.trim()} / IG: ${inputLine.value.trim()} / ที่อยู่: ${inputAddress.value.trim()}`,
-                items: itemsFormatted,
-                total: total
+            paymentModal.classList.remove('opacity-0', 'pointer-events-none');
+            paymentModal.querySelector('div').classList.remove('scale-95');
+        }
+
+        function closePaymentModal() {
+            paymentModal.classList.add('opacity-0', 'pointer-events-none');
+            paymentModal.querySelector('div').classList.add('scale-95');
+        }
+
+        closePaymentModalBtn.addEventListener('click', closePaymentModal);
+
+        checkoutBtn.addEventListener('click', () => {
+            if(checkoutBtn.disabled) return;
+            openPaymentModal();
+        });
+
+        confirmPaymentBtn.addEventListener('click', () => {
+            const file = slipFileInput.files[0];
+            if (!file) {
+                showToast(currentLang === 'en' ? "Please attach transfer slip" : "กรุณาแนบสลิปการโอนเงิน", "error");
+                return;
+            }
+
+            confirmPaymentBtn.disabled = true;
+            confirmPaymentBtn.innerText = "กำลังส่งข้อมูล...";
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Slip = e.target.result;
+
+                const qty = cartItems.length;
+                const tierInfo = calculateTier(qty);
+                const total = qty * tierInfo.price;
+
+                const formattedCartItems = cartItems.map((item) => {
+                    return {
+                        "design": t(item.designNameKey), 
+                        "screenName": item.screenName,
+                        "screenNumber": item.screenNumber,
+                        "size": item.size
+                    };
+                });
+
+                const orderData = {
+                    "orderId": "LKB-" + new Date().getTime().toString().slice(-6),
+                    "timestamp": new Date().toLocaleString("th-TH"),
+                    "firstName": inputFirstname.value.trim(),
+                    "lastName": inputLastname.value.trim(),
+                    "faculty": inputFaculty.value.trim(),
+                    "year": inputYear.value.trim(),
+                    "phone": inputPhone.value.trim(),
+                    "contact": inputContact.value.trim(),
+                    "address": inputAddress.value.trim(),
+                    "totalQty": qty,
+                    "totalPrice": total,
+                    "slipUrl": base64Slip,
+                    "cartItems": formattedCartItems
+                };
+
+                sendOrderToGoogleSheet(orderData);
+                
+                const text = generateOrderSummary();
+                navigator.clipboard.writeText(text).then(() => {
+                    closePaymentModal();
+                    confirmPaymentBtn.disabled = false;
+                    confirmPaymentBtn.innerText = "ยืนยันการชำระเงินและส่งคำสั่งซื้อ";
+                    showToast(currentLang === 'en' ? "Order Submitted & Saved!" : "ส่งรายการสั่งซื้อและบันทึกข้อมูลเรียบร้อย!");
+                });
             };
 
-            // 2. ส่งข้อมูลบันทึกลง Google Sheets
-            sendOrderToGoogleSheet(orderData);
-
-            // 3. คัดลอกข้อความสรุป และเปิดแอปพลิเคชัน LINE
-            const text = generateOrderSummary();
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(currentLang === 'en' ? "Data copied & saved! Opening LINE..." : "คัดลอกข้อมูลและบันทึกออเดอร์แล้ว! กำลังเปิด LINE...");
-                setTimeout(() => {
-                    // เปลี่ยน YOUR_SHOP_LINE_ID เป็น Line ID ของร้านคุณ (เช่น @justwearlkb)
-                    window.open('https://line.me/ti/p/~YOUR_SHOP_LINE_ID', '_blank');
-                }, 1000);
-            });
+            reader.readAsDataURL(file);
         });
 
         // --- LEGAL MODAL LOGIC ---
@@ -1065,7 +1126,6 @@
         document.querySelectorAll('.scroll-trigger').forEach(el => {
             observer.observe(el);
         });
-
     </script>
 </body>
 </html>
